@@ -1,0 +1,27 @@
+{
+  "tables": [
+    {"name": "FactOrder", "description": "Order fact table from Pluto Gold Layer"},
+    {"name": "DimCustomer", "description": "Customer dimension"},
+    {"name": "DimProduct", "description": "Product dimension"}
+  ],
+  "columns": [
+    {"table": "DimCustomer", "column": "CustomerKey", "type": "integer", "description": "Customer surrogate key", "synonyms": ["CUSTOMER_ID", "CustID"]},
+    {"table": "DimCustomer", "column": "CustomerName", "type": "string", "description": "Customer full name", "synonyms": ["CUSTOMER_NAME"]},
+    {"table": "DimCustomer", "column": "Region", "type": "string", "description": "Customer region", "synonyms": ["REGION", "SalesRegion"]},
+    {"table": "FactOrder", "column": "OrderDate", "type": "date", "description": "Date order was placed", "synonyms": ["ORDER_DATE"]},
+    {"table": "FactOrder", "column": "OrderAmount", "type": "decimal", "description": "Total order amount", "synonyms": ["ORDER_VALUE", "Sales Amount"]},
+    {"table": "DimProduct", "column": "ProductName", "type": "string", "description": "Product name", "synonyms": ["PRODUCT_NAME"]},
+    {"table": "FactOrder", "column": "ProductKey", "type": "integer", "description": "Product foreign key"}
+  ],
+  "measures": [
+    {"table": "FactOrder", "name": "TotalRevenue", "expression": "SUM(FactOrder[OrderAmount])", "description": "Total revenue from orders", "synonyms": ["REVENUE", "Sales"]},
+    {"table": "FactOrder", "name": "OrderCount", "expression": "COUNT(FactOrder[OrderKey])", "description": "Count of orders", "synonyms": ["ORDER_COUNT"]}
+  ],
+  "relationships": [
+    {"from_table": "FactOrder", "from_column": "CustomerKey", "to_table": "DimCustomer", "to_column": "CustomerKey", "cardinality": "many-to-one"},
+    {"from_table": "FactOrder", "from_column": "ProductKey", "to_table": "DimProduct", "to_column": "ProductKey", "cardinality": "many-to-one"}
+  ],
+  "hierarchies": [
+    {"table": "DimCustomer", "name": "Geography", "levels": ["Region", "CustomerName"]}
+  ]
+}

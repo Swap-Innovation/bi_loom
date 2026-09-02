@@ -1,0 +1,52 @@
+{
+  "name": "Telco BI Platform Export",
+  "version": "1.0",
+  "technology": "SAP Business Objects",
+  "folders": [
+    {
+      "id": "folder-telco",
+      "name": "Fixed Telco",
+      "path": "/Corporate/Fixed Telco"
+    },
+    {
+      "id": "folder-executive",
+      "name": "Executive Dashboards",
+      "path": "/Corporate/Executive",
+      "parent_id": "folder-telco"
+    }
+  ],
+  "documents": [
+    {
+      "id": "report-001",
+      "name": "Fixed Telco Orders",
+      "description": "Web Intelligence order summary — Document → Tabs → Blocks",
+      "product_type": "webi",
+      "folder_id": "folder-telco",
+      "file": "reports/report-001/report.xml"
+    },
+    {
+      "id": "crystal-001",
+      "name": "Customer Invoice Report",
+      "description": "Crystal Reports — Report → Sections → Objects",
+      "product_type": "crystal",
+      "folder_id": "folder-telco",
+      "file": "reports/crystal-001/report.xml"
+    },
+    {
+      "id": "dashboard-001",
+      "name": "Telco Executive Dashboard",
+      "description": "BO Dashboard — Canvas → Components",
+      "product_type": "dashboard",
+      "folder_id": "folder-executive",
+      "file": "reports/dashboard-001/dashboard.xml"
+    },
+    {
+      "id": "analysis-001",
+      "name": "Revenue OLAP Workbook",
+      "description": "Analysis OLAP — Workbook → Views → Charts",
+      "product_type": "analysis",
+      "folder_id": "folder-executive",
+      "file": "reports/analysis-001/workbook.xml"
+    }
+  ]
+}

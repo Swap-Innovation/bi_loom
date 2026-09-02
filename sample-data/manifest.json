@@ -1,0 +1,32 @@
+{
+  "version": "2.0",
+  "description": "Read-only sample assets organized per project. Runtime project data lives in the API/database.",
+  "projects": [
+    {
+      "id": "fixed-telco-orders",
+      "path": "projects/fixed-telco-orders",
+      "name": "Fixed Telco Orders Migration",
+      "description": "Full BO export with WebI, Crystal, Dashboard, and Analysis"
+    },
+    {
+      "id": "retail-analytics",
+      "path": "projects/retail-analytics",
+      "name": "Retail Analytics (Target-only)",
+      "description": "Alternate Pluto semantic model for catalog demos"
+    }
+  ],
+  "demo_project_template": {
+    "sample_project_id": "fixed-telco-orders",
+    "name": "Fixed Telco Orders Migration",
+    "description": "Demo migration using sample BO export and Pluto semantic model",
+    "source_technology": "SAP Business Objects",
+    "target_technology": "Power BI"
+  },
+  "legacy_paths": {
+    "note": "Pre-v2 paths redirected to projects/fixed-telco-orders",
+    "bo_export_zip": "projects/fixed-telco-orders/artifacts/fixed-telco-orders.zip",
+    "bo_manifest": "projects/fixed-telco-orders/source/business-objects/manifest.json",
+    "pluto_model": "projects/fixed-telco-orders/target/pluto-model.json",
+    "glossary": "projects/fixed-telco-orders/target/glossary.json"
+  }
+}

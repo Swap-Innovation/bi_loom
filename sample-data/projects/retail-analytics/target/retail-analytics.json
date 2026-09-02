@@ -1,0 +1,29 @@
+{
+  "tables": [
+    {"name": "DimStore", "description": "Store dimension"},
+    {"name": "DimDate", "description": "Date dimension"},
+    {"name": "FactSales", "description": "Sales fact table"}
+  ],
+  "columns": [
+    {"table": "DimStore", "column": "StoreKey", "type": "integer", "description": "Store surrogate key", "synonyms": ["STORE_ID"]},
+    {"table": "DimStore", "column": "StoreName", "type": "string", "description": "Store name", "synonyms": ["STORE_NAME"]},
+    {"table": "DimStore", "column": "Region", "type": "string", "description": "Store region", "synonyms": ["REGION"]},
+    {"table": "DimDate", "column": "DateKey", "type": "date", "description": "Date key", "synonyms": ["DATE"]},
+    {"table": "DimDate", "column": "FiscalYear", "type": "integer", "description": "Fiscal year", "synonyms": ["YEAR"]},
+    {"table": "FactSales", "column": "SalesAmount", "type": "decimal", "description": "Sales amount", "synonyms": ["SALES", "REVENUE"]},
+    {"table": "FactSales", "column": "UnitsSold", "type": "integer", "description": "Units sold", "synonyms": ["UNITS"]},
+    {"table": "FactSales", "column": "StoreKey", "type": "integer", "description": "Store foreign key"},
+    {"table": "FactSales", "column": "DateKey", "type": "date", "description": "Date foreign key"}
+  ],
+  "measures": [
+    {"table": "FactSales", "name": "TotalSales", "expression": "SUM(FactSales[SalesAmount])", "description": "Total sales revenue", "synonyms": ["REVENUE", "Sales"]},
+    {"table": "FactSales", "name": "UnitsSold", "expression": "SUM(FactSales[UnitsSold])", "description": "Total units sold", "synonyms": ["UNITS_SOLD"]}
+  ],
+  "relationships": [
+    {"from_table": "FactSales", "from_column": "StoreKey", "to_table": "DimStore", "to_column": "StoreKey", "cardinality": "many-to-one"},
+    {"from_table": "FactSales", "from_column": "DateKey", "to_table": "DimDate", "to_column": "DateKey", "cardinality": "many-to-one"}
+  ],
+  "hierarchies": [
+    {"table": "DimStore", "name": "Geography", "levels": ["Region", "StoreName"]}
+  ]
+}

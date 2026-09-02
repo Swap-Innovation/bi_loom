@@ -1,0 +1,9 @@
+{
+  "terms": [
+    {"term": "Revenue", "synonyms": ["Sales", "Sales Amount", "Order Revenue", "ORDER_VALUE"], "definition": "Monetary value of customer orders"},
+    {"term": "Customer", "synonyms": ["Client", "Subscriber", "CUSTOMER_ID", "CUSTOMER_NAME"], "definition": "Individual or business purchasing telco services"},
+    {"term": "Order", "synonyms": ["Purchase", "Transaction", "ORDER_DATE", "ORDER_COUNT"], "definition": "A customer order for telco products or services"},
+    {"term": "Product", "synonyms": ["Service", "Offering", "PRODUCT_NAME"], "definition": "Telco product or service offering"},
+    {"term": "Region", "synonyms": ["Territory", "Area", "Sales Region"], "definition": "Geographic sales region"}
+  ]
+}

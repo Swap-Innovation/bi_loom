@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dashboard id="dashboard-001" name="Telco Executive Dashboard" productType="dashboard">
+  <description>Executive KPI dashboard combining multiple WebI reports</description>
+  <connections>
+    <connection name="Pluto_Gold" type="ODBC" datasource="PostgreSQL"/>
+  </connections>
+  <canvas name="Executive Overview">
+    <component name="Revenue KPI" type="metric" x="24" y="24" width="200" height="120" sourceReport="Fixed Telco Orders">
+      <binding name="TotalRevenue"/>
+      <formatting background="#FFFFFF" color="#E20074"/>
+    </component>
+    <component name="Orders Chart" type="chart" x="240" y="24" width="480" height="280" sourceReport="Fixed Telco Orders" chartType="bar">
+      <binding name="REGION"/>
+      <binding name="ORDER_COUNT"/>
+      <formatting background="#F5F5F5" color="#111111"/>
+    </component>
+    <component name="Region Selector" type="selector" x="24" y="320" width="200" height="40">
+      <binding name="REGION"/>
+    </component>
+    <component name="Churn Gauge" type="gauge" x="740" y="24" width="180" height="180">
+      <binding name="ChurnRate"/>
+      <formatting background="#FFFFFF" color="#16A34A"/>
+    </component>
+  </canvas>
+  <canvas name="Drill-down Detail">
+    <component name="Customer Table" type="table" x="24" y="24" width="900" height="400" sourceReport="Customer Invoice Report">
+      <binding name="CUSTOMER_NAME"/>
+      <binding name="TotalAmount"/>
+    </component>
+  </canvas>
+</dashboard>

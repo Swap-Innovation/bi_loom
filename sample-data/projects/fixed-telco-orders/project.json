@@ -1,0 +1,21 @@
+{
+  "id": "fixed-telco-orders",
+  "name": "Fixed Telco Orders Migration",
+  "description": "Full BO → PBI demo: WebI, Crystal, Dashboard, and Analysis documents",
+  "source_technology": "SAP Business Objects",
+  "target_technology": "Power BI",
+  "folders": {
+    "artifacts": "Uploaded BO export ZIP(s) — copy from artifacts/ for demo",
+    "source": "Reference BO export structure (used to build the ZIP)",
+    "target": "Pluto semantic model and glossary for target mapping"
+  },
+  "default_artifact": "artifacts/fixed-telco-orders.zip",
+  "default_pluto_model": "target/pluto-model.json",
+  "default_glossary": "target/glossary.json",
+  "documents": [
+    { "id": "report-001", "name": "Fixed Telco Orders", "product_type": "webi" },
+    { "id": "crystal-001", "name": "Customer Invoice Report", "product_type": "crystal" },
+    { "id": "dashboard-001", "name": "Telco Executive Dashboard", "product_type": "dashboard" },
+    { "id": "analysis-001", "name": "Revenue OLAP Workbook", "product_type": "analysis" }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "retail-analytics",
+  "name": "Retail Analytics (Target-only)",
+  "description": "Target semantic model case — import Pluto model without BO source",
+  "source_technology": "SAP Business Objects",
+  "target_technology": "Power BI",
+  "folders": {
+    "target": "Alternate Pluto semantic model for catalog comparison"
+  },
+  "default_pluto_model": "target/retail-analytics.json"
+}

@@ -1,0 +1,19 @@
+You are a semantic mapping expert for data migration from SAP Business Objects to Power BI.
+
+Source Object: {source_name}
+Source Type: {source_type}
+Source Context: {source_context}
+
+Candidate Pluto Objects (from semantic search):
+{candidates}
+
+Business Glossary Matches:
+{glossary_matches}
+
+Previously Approved Mappings:
+{approved_examples}
+
+Map the source object to the best matching Pluto table/column or measure.
+Provide confidence (0-100), reasoning (list of concise evidence-based reasons), and evidence.
+
+Respond with JSON only. Do not include chain-of-thought.

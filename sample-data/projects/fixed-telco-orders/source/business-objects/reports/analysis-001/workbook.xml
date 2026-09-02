@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workbook id="analysis-001" name="Revenue OLAP Workbook" productType="analysis">
+  <description>OLAP analysis of revenue by geography and product</description>
+  <cube name="TelcoRevenueCube" datasource="BEx/TelcoBW">
+    <dimension name="Geography" hierarchy="Geography"/>
+    <dimension name="Product" hierarchy="ProductHierarchy"/>
+    <dimension name="Time" hierarchy="FiscalCalendar"/>
+    <measure name="Revenue" aggregation="SUM"/>
+    <measure name="OrderCount" aggregation="COUNT"/>
+    <measure name="AvgOrderValue" aggregation="AVG"/>
+  </cube>
+  <mdx>SELECT {[Measures].[Revenue], [Measures].[OrderCount]} ON COLUMNS, {[Geography].[Region].Members} ON ROWS FROM [TelcoRevenueCube]</mdx>
+  <view name="Revenue by Region" type="chart">
+    <chart name="Regional Revenue" chartType="bar" x="24" y="24" width="500" height="300">
+      <axis name="REGION" role="category"/>
+      <axis name="Revenue" role="value"/>
+    </chart>
+  </view>
+  <view name="Product Analysis" type="crosstab">
+    <crosstab name="Revenue Matrix">
+      <dimension name="REGION" role="row"/>
+      <dimension name="PRODUCT_CATEGORY" role="column"/>
+      <measure name="Revenue"/>
+    </crosstab>
+  </view>
+  <view name="Trend Analysis" type="chart">
+    <chart name="Monthly Trend" chartType="line" x="24" y="24" width="600" height="280">
+      <axis name="FISCAL_MONTH" role="category"/>
+      <axis name="Revenue" role="value"/>
+    </chart>
+  </view>
+</workbook>

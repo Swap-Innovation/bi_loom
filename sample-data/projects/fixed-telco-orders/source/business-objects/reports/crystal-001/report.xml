@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<crystalReport id="crystal-001" name="Customer Invoice Report" productType="crystal">
+  <description>Monthly customer invoice with line items</description>
+  <connection name="Telco_DWH" type="ODBC" database="TELCO_DWH"/>
+  <parameters>
+    <parameter name="InvoiceMonth" dataType="date" prompt="Select Invoice Month"/>
+    <parameter name="CustomerSegment" dataType="string" prompt="Customer Segment"/>
+  </parameters>
+  <formulas>
+    <formula name="TotalAmount"><expression>Sum({Invoice.LineAmount})</expression></formula>
+    <formula name="TaxAmount"><expression>{TotalAmount} * 0.19</expression></formula>
+  </formulas>
+  <section name="Report Header" type="reportHeader">
+    <object type="text" name="Title" left="100" top="50" width="600" height="40" field="Report Title"/>
+  </section>
+  <section name="Page Header" type="pageHeader">
+    <object type="field" name="CustomerName" left="100" top="120" width="300" height="20" field="CUSTOMER_NAME"/>
+    <object type="field" name="InvoiceDate" left="450" top="120" width="150" height="20" field="INVOICE_DATE"/>
+  </section>
+  <section name="Details" type="details">
+    <object type="field" name="LineItem" left="100" top="160" width="200" height="18" field="PRODUCT_NAME"/>
+    <object type="field" name="LineAmount" left="350" top="160" width="100" height="18" field="LINE_AMOUNT"/>
+    <object type="chart" name="SpendByCategory" left="100" top="200" width="400" height="250" chartType="pie" field="CATEGORY"/>
+  </section>
+  <section name="Report Footer" type="reportFooter">
+    <object type="field" name="GrandTotal" left="350" top="480" width="120" height="20" field="TotalAmount"/>
+    <object type="subreport" name="PaymentHistory" left="100" top="520" width="500" height="200"/>
+  </section>
+</crystalReport>

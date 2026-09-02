@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report id="report-001" name="Fixed Telco Orders">
+  <description>Order summary report for fixed telco products</description>
+
+  <documentProperties author="BI Team" created="2024-01-15" refreshOnOpen="true" locale="en_US"/>
+
+  <connections>
+    <connection id="conn-001" name="Telco_DWH" type="JDBC" datasource="Oracle" server="dwh.telco.local" database="TELCO_DWH"/>
+    <connection id="conn-002" name="Pluto_Gold" type="ODBC" datasource="PostgreSQL" server="pluto.telco.local" database="gold_layer"/>
+  </connections>
+
+  <universe id="uni-001" name="Telco Orders Universe" dataFoundation="Telco_DWH">
+    <classes>
+      <class name="Customer">
+        <dimension name="CUSTOMER_ID" dataType="integer" description="Customer identifier"/>
+        <dimension name="CUSTOMER_NAME" dataType="string"/>
+        <dimension name="REGION" dataType="string"/>
+        <detail name="CUSTOMER_SEGMENT" dataType="string"/>
+      </class>
+      <class name="Order">
+        <dimension name="ORDER_DATE" dataType="date"/>
+        <measure name="ORDER_VALUE" dataType="decimal" aggregation="SUM"/>
+        <measure name="ORDER_COUNT" dataType="integer" aggregation="COUNT"/>
+      </class>
+      <class name="Product">
+        <dimension name="PRODUCT_NAME" dataType="string"/>
+        <dimension name="PRODUCT_CATEGORY" dataType="string"/>
+      </class>
+    </classes>
+    <contexts>
+      <context name="OrderContext" tables="CUSTOMERS,ORDERS,PRODUCTS"/>
+    </contexts>
+    <lovs>
+      <lov name="RegionLOV" object="REGION" values="North,South,East,West"/>
+    </lovs>
+    <hierarchies>
+      <hierarchy name="Geography" levels="REGION,CUSTOMER_NAME"/>
+      <hierarchy name="ProductHierarchy" levels="PRODUCT_CATEGORY,PRODUCT_NAME"/>
+    </hierarchies>
+  </universe>
+
+  <dataProviders>
+    <dataProvider id="dp-001" name="OrderQuery" type="universe" universe="Telco Orders Universe"/>
+  </dataProviders>
+
+  <pages>
+    <page id="page-001" name="Summary" index="0"/>
+    <page id="page-002" name="Details" index="1"/>
+  </pages>
+
+  <query name="OrderQuery">
+    <sql>SELECT c.CUSTOMER_ID, c.CUSTOMER_NAME, c.REGION, o.ORDER_DATE, o.ORDER_VALUE, p.PRODUCT_NAME, o.ORDER_COUNT FROM CUSTOMERS c JOIN ORDERS o ON c.CUSTOMER_ID = o.CUSTOMER_ID JOIN PRODUCTS p ON o.PRODUCT_ID = p.PRODUCT_ID WHERE o.ORDER_DATE BETWEEN @StartDate AND @EndDate AND c.REGION IN (@Region)</sql>
+    <joins>
+      <join left="CUSTOMERS" right="ORDERS" on="CUSTOMER_ID" type="INNER"/>
+      <join left="ORDERS" right="PRODUCTS" on="PRODUCT_ID" type="INNER"/>
+    </joins>
+    <resultObjects>
+      <object name="CUSTOMER_ID" type="dimension"/>
+      <object name="CUSTOMER_NAME" type="dimension"/>
+      <object name="REGION" type="dimension"/>
+      <object name="ORDER_DATE" type="dimension"/>
+      <object name="ORDER_VALUE" type="measure"/>
+      <object name="PRODUCT_NAME" type="dimension"/>
+      <object name="ORDER_COUNT" type="measure"/>
+    </resultObjects>
+    <filters>
+      <filter name="QueryDateFilter" operator="BETWEEN" field="ORDER_DATE"/>
+    </filters>
+  </query>
+
+  <calculations>
+    <calculation name="REVENUE" aggregation="SUM" dataType="decimal">
+      <expression>SUM(ORDER_VALUE)</expression>
+      <formula>If([ORDER_VALUE]&gt;0;[ORDER_VALUE];0)</formula>
+    </calculation>
+    <calculation name="AvgOrderValue" aggregation="AVG" dataType="decimal">
+      <expression>AVG(ORDER_VALUE)</expression>
+    </calculation>
+  </calculations>
+
+  <variables>
+    <prompt name="StartDate" dataType="date" controlType="calendar">
+      <defaultValue>2024-01-01</defaultValue>
+      <promptText>Start Date</promptText>
+    </prompt>
+    <prompt name="EndDate" dataType="date" controlType="calendar">
+      <defaultValue>2024-12-31</defaultValue>
+      <promptText>End Date</promptText>
+    </prompt>
+    <variable name="Region" dataType="string" type="prompt">
+      <defaultValue>All</defaultValue>
+      <prompt>Select Region</prompt>
+    </variable>
+    <mergedVariable name="DateRangeLabel" sources="StartDate,EndDate" expression="StartDate + ' to ' + EndDate"/>
+  </variables>
+
+  <filters>
+    <filter name="DateRange" operator="BETWEEN" field="ORDER_DATE" scope="report">
+      <value>@StartDate, @EndDate</value>
+    </filter>
+    <filter name="RegionFilter" operator="IN" field="REGION" scope="report">
+      <value>@Region</value>
+    </filter>
+    <filter name="BlockFilter" operator="&gt;" field="ORDER_VALUE" scope="block" block="Order Summary">
+      <value>0</value>
+    </filter>
+  </filters>
+
+  <scopeOfAnalysis includeEmpty="false" drillLevel="REGION"/>
+
+  <layout>
+    <section name="ReportHeader" type="header"/>
+    <section name="PageBody" type="body"/>
+    <break field="REGION" direction="down" showHeader="true"/>
+    <headerFooter zone="pageHeader" text="Fixed Telco Orders Report"/>
+    <headerFooter zone="pageFooter" text="Confidential - Internal Use"/>
+  </layout>
+
+  <visuals>
+    <visual type="table" title="Order Summary" page="Summary">
+      <position x="24" y="120" width="900" height="400" zIndex="1"/>
+      <formatting font="Segoe UI" fontSize="10" background="#FFFFFF" borderColor="#E5E7EB"/>
+      <field name="CUSTOMER_ID" dataType="integer" role="dimension"/>
+      <field name="CUSTOMER_NAME" dataType="string" role="dimension"/>
+      <field name="ORDER_DATE" dataType="date" role="dimension"/>
+      <field name="ORDER_VALUE" dataType="decimal" role="measure"/>
+      <field name="PRODUCT_NAME" dataType="string" role="dimension"/>
+      <field name="REGION" dataType="string" role="dimension"/>
+      <conditionalFormatting field="ORDER_VALUE" rule="&gt;10000" color="#16A34A"/>
+      <numberFormat field="ORDER_VALUE" format="#,##0.00"/>
+    </visual>
+    <visual type="bar" title="Revenue by Region" page="Summary">
+      <position x="24" y="540" width="440" height="280" zIndex="2"/>
+      <formatting seriesColor="#E20074" axisColor="#111111" gridColor="#F5F5F5"/>
+      <field name="REGION" dataType="string" role="axis"/>
+      <field name="REVENUE" dataType="decimal" role="value"/>
+    </visual>
+    <visual type="kpi" title="Total Orders" page="Summary">
+      <position x="500" y="540" width="200" height="120" zIndex="3"/>
+      <formatting fontSize="28" color="#E20074"/>
+      <field name="ORDER_COUNT" dataType="integer" role="value"/>
+    </visual>
+    <visual type="matrix" title="Orders Crosstab" page="Details">
+      <position x="24" y="80" width="600" height="350" zIndex="1"/>
+      <field name="REGION" dataType="string" role="row"/>
+      <field name="PRODUCT_NAME" dataType="string" role="column"/>
+      <field name="ORDER_COUNT" dataType="integer" role="value"/>
+    </visual>
+    <visual type="map" title="Orders by Geography" page="Details">
+      <position x="24" y="460" width="500" height="300" zIndex="2"/>
+      <field name="REGION" dataType="string" role="location"/>
+      <field name="ORDER_COUNT" dataType="integer" role="value"/>
+    </visual>
+    <freeCell name="ReportTitle" page="Summary">
+      <position x="24" y="24" width="400" height="40"/>
+      <text>Fixed Telco Orders - Executive Summary</text>
+      <formatting font="Segoe UI" fontSize="18" bold="true" color="#111111"/>
+    </freeCell>
+  </visuals>
+
+  <interactivity>
+    <drillPath from="REGION" to="CUSTOMER_NAME" hierarchy="Geography"/>
+    <hyperlink source="CUSTOMER_NAME" target="CustomerDetailReport" type="document"/>
+    <alert name="HighValueOrder" condition="ORDER_VALUE &gt; 50000" message="High value order detected"/>
+  </interactivity>
+
+  <dependencies>
+    <dependency from="REVENUE" to="ORDER_VALUE" type="formula"/>
+    <dependency from="RegionFilter" to="Region" type="variable"/>
+  </dependencies>
+</report>
