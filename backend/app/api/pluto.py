@@ -3,7 +3,7 @@ import json
 from fastapi import APIRouter, Depends, File, Request, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.data.target_model_catalog import list_catalog_models, load_catalog_model
+from app.data.target_model_catalog import list_catalog_models
 from app.core.database import get_db
 from app.core.middleware import get_request_id, success_response
 from app.services.project_service import PlutoService
@@ -22,23 +22,44 @@ async def select_catalog_model(
     request: Request,
     db: AsyncSession = Depends(get_db),
 ):
+    """Select one catalog model (legacy) or a multi-model / table coverage selection.
+
+    Body (single model):
+      { "catalog_id": "...", "name"?: "...", "tables"?: ["FactOrder", ...] }
+
+    Body (multi-model coverage):
+      { "selections": [{ "catalog_id": "...", "tables"?: [...] }, ...], "name"?: "..." }
+    """
     body = await request.json()
-    catalog_id = body.get("catalog_id")
-    if not catalog_id:
-        from app.core.exceptions import ValidationError
-        raise ValidationError("catalog_id is required")
-    model_data = load_catalog_model(catalog_id)
-    if not model_data:
-        from app.core.exceptions import NotFoundError
-        raise NotFoundError(f"Catalog model '{catalog_id}' not found")
     service = PlutoService(db)
-    name = body.get("name") or catalog_id
-    pluto = await service.import_model(project_id, model_data, name=name, catalog_id=catalog_id, set_active=True)
+    selections = body.get("selections")
+    name = body.get("name")
+
+    if selections is not None:
+        if not isinstance(selections, list) or not selections:
+            from app.core.exceptions import ValidationError
+            raise ValidationError("selections must be a non-empty list")
+        pluto = await service.apply_coverage_selection(project_id, selections, name=name)
+    else:
+        catalog_id = body.get("catalog_id")
+        if not catalog_id:
+            from app.core.exceptions import ValidationError
+            raise ValidationError("catalog_id or selections is required")
+        tables = body.get("tables")
+        pluto = await service.apply_coverage_selection(
+            project_id,
+            [{"catalog_id": catalog_id, "tables": tables}],
+            name=name,
+        )
+
+    meta = (pluto.model_data or {}).get("_meta") or {}
     return success_response({
         "id": pluto.id,
-        "name": name,
-        "catalog_id": catalog_id,
-        "tables": len(model_data.get("tables", [])),
+        "name": pluto.name or meta.get("name"),
+        "catalog_id": pluto.catalog_id or meta.get("catalog_id"),
+        "tables": len((pluto.model_data or {}).get("tables", [])),
+        "selected_catalog_ids": meta.get("selected_catalog_ids") or [],
+        "selected_tables": meta.get("selected_tables") or {},
     }, get_request_id(request))
 
 
@@ -56,6 +77,10 @@ async def list_pluto_models(project_id: str, request: Request, db: AsyncSession 
             "column_count": len(m.model_data.get("columns", [])),
             "measure_count": len(m.model_data.get("measures", [])),
             "created_at": m.created_at.isoformat() if m.created_at else None,
+            "selected_catalog_ids": (m.model_data or {}).get("_meta", {}).get("selected_catalog_ids") or (
+                [getattr(m, "catalog_id")] if getattr(m, "catalog_id", None) else []
+            ),
+            "selected_tables": (m.model_data or {}).get("_meta", {}).get("selected_tables") or {},
         }
         for m in models
     ], get_request_id(request))

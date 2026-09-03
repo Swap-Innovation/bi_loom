@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { Database, Trash2, Upload, AlertCircle } from 'lucide-react';
+import { Database, Trash2, Upload, AlertCircle, FolderOpen, BookOpen, Plug, Clock } from 'lucide-react';
 import { api } from '../../services/api';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
@@ -14,11 +14,12 @@ import { ModelCatalog } from '../../components/target/ModelCatalog';
 import { SchemaGraph } from '../../components/target/SchemaGraph';
 import { GlossaryManager } from '../../components/target/GlossaryManager';
 import { PhaseContinueHint } from '../../components/navigation/PhaseContinueHint';
+import type { CatalogSelectionItem } from '../../types';
 
 export function TargetModelPage() {
   const { projectId } = useParams<{ projectId: string }>();
   const queryClient = useQueryClient();
-  const [tab, setTab] = useState('models');
+  const [tab, setTab] = useState('browse');
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -61,14 +62,31 @@ export function TargetModelPage() {
   };
 
   const selectMutation = useMutation({
-    mutationFn: ({ catalogId, name }: { catalogId: string; name: string }) =>
-      api.selectTargetModel(projectId!, catalogId, name),
-    onSuccess: () => {
-      toast.success('Target model selected — Mapping is now available');
+    mutationFn: (selections: CatalogSelectionItem[]) =>
+      api.selectTargetCoverage(projectId!, selections),
+    onSuccess: (data) => {
+      const n = data.selected_catalog_ids?.length ?? 1;
+      toast.success(
+        n > 1
+          ? `Merged ${n} models (${data.tables} tables) for coverage — Mapping is available`
+          : `Target model selected (${data.tables} tables) — Mapping is now available`,
+      );
       invalidateTarget();
     },
-    onError: (err: Error) => toast.error(err.message || 'Failed to select model'),
+    onError: (err: Error) => toast.error(err.message || 'Failed to apply coverage selection'),
   });
+
+  const appliedSelection = activeModel
+    ? {
+        catalogIds:
+          activeModel.selected_catalog_ids?.length
+            ? activeModel.selected_catalog_ids
+            : activeModel.catalog_id && activeModel.catalog_id !== 'composite'
+              ? [activeModel.catalog_id]
+              : [],
+        tablesByCatalog: activeModel.selected_tables ?? {},
+      }
+    : undefined;
 
   const activateMutation = useMutation({
     mutationFn: (modelId: string) => api.activatePlutoModel(projectId!, modelId),
@@ -112,7 +130,7 @@ export function TargetModelPage() {
         <div>
           <h2 className="text-title">Target Semantic Model</h2>
           <p className="text-caption mt-1">
-            Select one Pluto model for mapping. Mapping and Convert stay locked until a model is active.
+            Choose a target semantic model: browse the catalog, import Collibra glossary terms, or connect Power BI (coming soon).
           </p>
         </div>
         {activeModel ? (
@@ -131,15 +149,80 @@ export function TargetModelPage() {
 
       <Tabs
         tabs={[
-          { id: 'models', label: 'Models' },
-          { id: 'glossary', label: 'Glossary' },
+          { id: 'browse', label: 'Browse' },
+          { id: 'collibra', label: 'Collibra Glossary' },
+          { id: 'powerbi', label: 'Connect to Power BI' },
         ]}
         active={tab}
         onChange={setTab}
       />
 
-      {tab === 'glossary' ? (
-        <GlossaryManager projectId={projectId!} />
+      {tab === 'collibra' ? (
+        <div className="space-y-6">
+          <Card className="!p-5">
+            <div className="flex items-start gap-3">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-slate-100 text-ink-muted">
+                <BookOpen size={18} strokeWidth={1.75} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <p className="font-semibold text-[14px] tracking-tight">Connect Collibra</p>
+                  <Badge variant="outline" size="sm">Coming soon</Badge>
+                </div>
+                <p className="text-caption mt-1">
+                  Authenticate to Collibra Data Governance and pull business terms, synonyms, and mappings into this project.
+                </p>
+                <Button className="mt-4" size="sm" disabled title="Collibra connection is not available yet">
+                  Connect Collibra
+                </Button>
+              </div>
+            </div>
+          </Card>
+          <GlossaryManager projectId={projectId!} />
+        </div>
+      ) : tab === 'powerbi' ? (
+        <Card>
+          <div className="max-w-xl mx-auto text-center py-4">
+            <span className="inline-flex items-center justify-center h-12 w-12 rounded-md bg-slate-100 text-ink-muted mb-4">
+              <Plug size={22} strokeWidth={1.5} />
+            </span>
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <h3 className="text-title">Power BI semantic models</h3>
+              <Badge variant="outline" size="sm">Coming soon</Badge>
+            </div>
+            <p className="text-body mt-2">
+              Connect with Microsoft Entra and the Power BI REST API to fetch workspace semantic models
+              as the migration target — datasets, tables, columns, measures, and relationships.
+            </p>
+            <ul className="mt-6 text-left space-y-2.5 border-t border-border pt-5">
+              {[
+                'Workspaces & semantic models (datasets)',
+                'Tables, columns, measures & relationships',
+                'Report-bound models for lineage',
+                'Activate a fetched model as the mapping target',
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-2.5 text-[13px] text-ink-muted">
+                  <Clock size={14} className="text-ink-faint shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <Button
+              className="mt-8"
+              disabled
+              title="Power BI API import is not available yet"
+            >
+              Connect to Power BI
+            </Button>
+            <p className="text-caption mt-3">
+              Use{' '}
+              <button type="button" className="text-primary font-semibold hover:underline" onClick={() => setTab('browse')}>
+                Browse
+              </button>
+              {' '}to select a catalog or uploaded model for now.
+            </p>
+          </div>
+        </Card>
       ) : (
         <>
           {!activeModel && (
@@ -197,12 +280,15 @@ export function TargetModelPage() {
 
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-sm font-semibold mb-3 uppercase tracking-wide text-gray-500">Preset Catalog</h3>
+              <h3 className="text-eyebrow mb-3 flex items-center gap-2">
+                <FolderOpen size={13} /> Browse catalog
+              </h3>
               <ModelCatalog
                 catalog={catalog ?? []}
                 activeCatalogId={activeModel?.catalog_id}
-                onSelect={(catalogId, name) => selectMutation.mutate({ catalogId, name })}
-                selecting={selectMutation.isPending}
+                appliedSelection={appliedSelection}
+                onApply={(selections) => selectMutation.mutate(selections)}
+                applying={selectMutation.isPending}
               />
             </div>
 

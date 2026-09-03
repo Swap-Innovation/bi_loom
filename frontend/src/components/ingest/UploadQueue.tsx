@@ -152,7 +152,7 @@ export const UploadQueue = forwardRef<UploadQueueHandle, UploadQueueProps>(funct
             e.target.value = '';
           }}
         />
-        Browse Files
+        Browse files
       </label>
 
       {queue.length > 0 && (

@@ -11,9 +11,9 @@ interface PhaseContinueHintProps {
 }
 
 /**
- * Standard next-step affordance on phase pages.
- * Primary journey CTA stays in the project header (workflow next_action);
- * pages use this secondary text link so actions are not duplicated as buttons.
+ * Secondary next-step affordance on phase pages.
+ * Primary journey CTA is in the project header (`useJourneyContinue`):
+ * it always points at the *next* step and stays disabled until the current step is done.
  */
 export function PhaseContinueHint({
   to,

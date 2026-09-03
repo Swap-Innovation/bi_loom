@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { CheckCircle2, Circle, Loader2, Lock, ArrowRight } from 'lucide-react';
 import { api } from '../services/api';
 import { useWorkflow } from '../hooks/useWorkflow';
+import { useJourneyContinue } from '../hooks/useJourneyContinue';
 import { Card, StatCard } from '../components/ui/Card';
 import { StatusBadge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
@@ -29,8 +30,9 @@ export function ProjectOverview() {
   });
 
   const { data: workflow } = useWorkflow(projectId);
+  const continueAction = useJourneyContinue(projectId);
 
-  if (!project) return <div className="text-gray-500">Loading...</div>;
+  if (!project) return <div className="text-ink-faint">Loading...</div>;
 
   const highConf = mappings?.filter((m) => m.confidence_level === 'HIGH').length ?? 0;
   const pending = mappings?.filter((m) => m.status === 'PENDING_REVIEW').length ?? 0;
@@ -38,31 +40,31 @@ export function ProjectOverview() {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-xl font-bold">{project.name}</h2>
-        <p className="text-gray-500 mt-1">{project.description}</p>
+        <h2 className="text-title">{project.name}</h2>
+        <p className="text-body mt-1">{project.description}</p>
         <div className="mt-2"><StatusBadge status={project.status} /></div>
       </div>
 
-      {workflow?.next_action && (
-        <Card className="mb-6 border-primary/30 bg-pink-50 !p-4">
+      {continueAction && (
+        <Card className="mb-6 border-primary/20 bg-primary-soft/40 !p-4">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-wide text-gray-500">Next step</p>
-              <p className="font-semibold">{workflow.next_action.label}</p>
-              {workflow.next_action.enabled === false && (
-                <p className="text-xs text-gray-500 mt-1">Available after parsing completes</p>
+              <p className="text-eyebrow">Next step</p>
+              <p className="font-semibold text-ink mt-1">{continueAction.label}</p>
+              {!continueAction.enabled && continueAction.disabledReason && (
+                <p className="text-caption mt-1">{continueAction.disabledReason}</p>
               )}
             </div>
-            {workflow.next_action.enabled === false ? (
-              <Button size="sm" disabled title="Finish parsing before this step unlocks">
-                Continue <ArrowRight size={14} />
-              </Button>
-            ) : (
-              <Link to={workflow.next_action.route}>
+            {continueAction.enabled ? (
+              <Link to={continueAction.route}>
                 <Button size="sm">
                   Continue <ArrowRight size={14} />
                 </Button>
               </Link>
+            ) : (
+              <Button size="sm" disabled title={continueAction.disabledReason}>
+                Continue <ArrowRight size={14} />
+              </Button>
             )}
           </div>
         </Card>

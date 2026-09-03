@@ -131,10 +131,16 @@ export interface TargetModelCatalogItem {
   name: string;
   description: string;
   table_count: number;
+  table_names?: string[];
   column_count: number;
   measure_count: number;
   relationship_count: number;
   filename: string;
+}
+
+export interface CatalogSelectionItem {
+  catalog_id: string;
+  tables?: string[];
 }
 
 export interface PlutoModelSummary {
@@ -146,6 +152,8 @@ export interface PlutoModelSummary {
   column_count: number;
   measure_count: number;
   created_at?: string;
+  selected_catalog_ids?: string[];
+  selected_tables?: Record<string, string[]>;
 }
 
 export interface ConversionStep {

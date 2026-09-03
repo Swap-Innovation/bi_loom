@@ -184,9 +184,33 @@ export const api = {
     request<import('../types').GlossaryTerm[]>(`/projects/${projectId}/glossary`),
   listPlutoModels: (projectId: string) =>
     request<import('../types').PlutoModelSummary[]>(`/projects/${projectId}/pluto-models`),
-  selectTargetModel: (projectId: string, catalogId: string, name?: string) =>
-    request<{ id: string; name: string; catalog_id: string; tables: number }>(`/projects/${projectId}/pluto-model/select`, {
-      method: 'POST', body: JSON.stringify({ catalog_id: catalogId, name }),
+  selectTargetModel: (projectId: string, catalogId: string, name?: string, tables?: string[]) =>
+    request<{
+      id: string;
+      name: string;
+      catalog_id: string;
+      tables: number;
+      selected_catalog_ids?: string[];
+      selected_tables?: Record<string, string[]>;
+    }>(`/projects/${projectId}/pluto-model/select`, {
+      method: 'POST',
+      body: JSON.stringify({ catalog_id: catalogId, name, tables }),
+    }),
+  selectTargetCoverage: (
+    projectId: string,
+    selections: import('../types').CatalogSelectionItem[],
+    name?: string,
+  ) =>
+    request<{
+      id: string;
+      name: string;
+      catalog_id: string;
+      tables: number;
+      selected_catalog_ids?: string[];
+      selected_tables?: Record<string, string[]>;
+    }>(`/projects/${projectId}/pluto-model/select`, {
+      method: 'POST',
+      body: JSON.stringify({ selections, name }),
     }),
   activatePlutoModel: (projectId: string, modelId: string) =>
     request<{ id: string; active: boolean }>(`/projects/${projectId}/pluto-models/${modelId}/activate`, { method: 'POST' }),

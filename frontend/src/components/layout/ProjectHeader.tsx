@@ -1,10 +1,10 @@
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { api } from '../../services/api';
-import { useWorkflow } from '../../hooks/useWorkflow';
 import { StatusBadge } from '../ui/Badge';
 import { Button } from '../ui/Button';
+import { useJourneyContinue } from '../../hooks/useJourneyContinue';
 
 export interface BreadcrumbCrumb {
   label: string;
@@ -22,7 +22,7 @@ export function ProjectHeader({ breadcrumb = [] }: ProjectHeaderProps) {
     queryFn: () => api.getProject(projectId!),
     enabled: !!projectId,
   });
-  const { data: workflow } = useWorkflow(projectId);
+  const continueAction = useJourneyContinue(projectId);
 
   return (
     <header className="bg-white/90 backdrop-blur-md border-b border-border px-5 sm:px-6 py-3.5">
@@ -64,19 +64,24 @@ export function ProjectHeader({ breadcrumb = [] }: ProjectHeaderProps) {
           )}
         </div>
 
-        {workflow?.next_action && (
-          workflow.next_action.enabled === false ? (
+        {continueAction && (
+          continueAction.enabled ? (
+            <Link to={continueAction.route} className="shrink-0">
+              <Button size="sm">
+                {continueAction.label}
+                <ArrowRight size={14} />
+              </Button>
+            </Link>
+          ) : (
             <Button
               size="sm"
               disabled
-              title="Finish parsing before this step unlocks"
+              className="shrink-0"
+              title={continueAction.disabledReason ?? 'Complete this step first'}
             >
-              {workflow.next_action.label}
+              {continueAction.label}
+              <ArrowRight size={14} />
             </Button>
-          ) : (
-            <Link to={workflow.next_action.route}>
-              <Button size="sm">{workflow.next_action.label}</Button>
-            </Link>
           )
         )}
       </div>

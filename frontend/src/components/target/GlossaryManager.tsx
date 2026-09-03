@@ -33,10 +33,10 @@ export function GlossaryManager({ projectId }: GlossaryManagerProps) {
         <div>
           <h3 className="font-semibold flex items-center gap-2">
             <BookOpen size={18} className="text-primary" />
-            Business Glossary
+            Glossary terms
           </h3>
           <p className="text-sm text-gray-500 mt-1">
-            Terms and synonyms improve AI mapping accuracy between BO fields and target model
+            Import a JSON glossary now. Collibra live sync is coming soon — terms and synonyms improve mapping accuracy.
           </p>
         </div>
         <label className="cursor-pointer">

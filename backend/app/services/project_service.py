@@ -660,13 +660,181 @@ class PlutoService:
     def __init__(self, db: AsyncSession):
         self.db = db
 
+    @staticmethod
+    def _filter_model_to_tables(model_data: dict, table_names: set[str]) -> dict:
+        """Keep only the given tables and dependent columns / measures / relationships."""
+        tables = [t for t in model_data.get("tables", []) if t.get("name") in table_names]
+        kept = {t.get("name") for t in tables}
+        columns = [c for c in model_data.get("columns", []) if c.get("table") in kept]
+        measures = [m for m in model_data.get("measures", []) if m.get("table") in kept]
+        hierarchies = [h for h in model_data.get("hierarchies", []) if h.get("table") in kept]
+        relationships = [
+            r for r in model_data.get("relationships", [])
+            if r.get("from_table") in kept and r.get("to_table") in kept
+        ]
+        return {
+            "tables": tables,
+            "columns": columns,
+            "measures": measures,
+            "relationships": relationships,
+            "hierarchies": hierarchies,
+        }
+
+    @staticmethod
+    def _rename_table_in_model(model_data: dict, rename: dict[str, str]) -> dict:
+        if not rename:
+            return model_data
+
+        def map_name(name: str | None) -> str:
+            if not name:
+                return ""
+            return rename.get(name, name)
+
+        return {
+            "tables": [
+                {**t, "name": map_name(t.get("name"))}
+                for t in model_data.get("tables", [])
+            ],
+            "columns": [
+                {**c, "table": map_name(c.get("table"))}
+                for c in model_data.get("columns", [])
+            ],
+            "measures": [
+                {**m, "table": map_name(m.get("table"))}
+                for m in model_data.get("measures", [])
+            ],
+            "hierarchies": [
+                {**h, "table": map_name(h.get("table"))}
+                for h in model_data.get("hierarchies", [])
+            ],
+            "relationships": [
+                {
+                    **r,
+                    "from_table": map_name(r.get("from_table")),
+                    "to_table": map_name(r.get("to_table")),
+                }
+                for r in model_data.get("relationships", [])
+            ],
+        }
+
+    def build_coverage_selection(
+        self,
+        selections: list[dict],
+        display_name: str | None = None,
+    ) -> tuple[dict, str, str]:
+        """Merge catalog models + optional table filters into one Pluto payload.
+
+        selections: [{ "catalog_id": str, "tables": list[str] | None }]
+        tables=None or omitted → all tables from that catalog.
+        Returns (model_data, catalog_id, name).
+        """
+        from app.data.target_model_catalog import load_catalog_model, list_catalog_models
+        from app.core.exceptions import ValidationError, NotFoundError
+
+        if not selections:
+            raise ValidationError("At least one catalog model must be selected")
+
+        catalog_names = {m["catalog_id"]: m["name"] for m in list_catalog_models()}
+        merged: dict = {
+            "tables": [],
+            "columns": [],
+            "measures": [],
+            "relationships": [],
+            "hierarchies": [],
+        }
+        used_table_names: set[str] = set()
+        selected_tables_meta: dict[str, list[str]] = {}
+        catalog_ids: list[str] = []
+
+        for sel in selections:
+            catalog_id = (sel.get("catalog_id") or "").strip()
+            if not catalog_id:
+                raise ValidationError("Each selection requires catalog_id")
+            raw = load_catalog_model(catalog_id)
+            if not raw:
+                raise NotFoundError(f"Catalog model '{catalog_id}' not found")
+
+            all_names = {t.get("name") for t in raw.get("tables", []) if t.get("name")}
+            requested = sel.get("tables")
+            if requested is None:
+                keep = set(all_names)
+            else:
+                keep = {str(t) for t in requested if t}
+                unknown = keep - all_names
+                if unknown:
+                    raise ValidationError(
+                        f"Unknown table(s) in '{catalog_id}': {', '.join(sorted(unknown))}"
+                    )
+            if not keep:
+                raise ValidationError(f"Select at least one table from '{catalog_id}'")
+
+            original_keep = set(keep)
+            filtered = self._filter_model_to_tables(raw, keep)
+            rename: dict[str, str] = {}
+            for tname in sorted(keep):
+                if tname in used_table_names:
+                    rename[tname] = f"{catalog_id}__{tname}"
+            if rename:
+                filtered = self._rename_table_in_model(filtered, rename)
+                keep = {rename.get(n, n) for n in keep}
+
+            used_table_names.update(keep)
+            selected_tables_meta[catalog_id] = sorted(original_keep)
+
+            for key in ("tables", "columns", "measures", "relationships", "hierarchies"):
+                merged[key].extend(filtered.get(key, []))
+            catalog_ids.append(catalog_id)
+
+        if not merged["tables"]:
+            raise ValidationError("Selection produced no tables")
+
+        catalog_id_out = catalog_ids[0] if len(catalog_ids) == 1 else "composite"
+        if display_name:
+            name_out = display_name
+        elif len(catalog_ids) == 1:
+            name_out = catalog_names.get(catalog_ids[0], catalog_ids[0])
+            table_count = len(selected_tables_meta[catalog_ids[0]])
+            total = len(load_catalog_model(catalog_ids[0]).get("tables", []))
+            if table_count < total:
+                name_out = f"{name_out} ({table_count} of {total} tables)"
+        else:
+            labels = [catalog_names.get(cid, cid) for cid in catalog_ids]
+            name_out = " + ".join(labels)
+
+        merged["_meta"] = {
+            "name": name_out,
+            "catalog_id": catalog_id_out,
+            "selected_catalog_ids": catalog_ids,
+            "selected_tables": selected_tables_meta,
+            "is_active": True,
+        }
+        return merged, catalog_id_out, name_out
+
+    async def apply_coverage_selection(
+        self,
+        project_id: str,
+        selections: list[dict],
+        name: str | None = None,
+    ) -> PlutoModel:
+        model_data, catalog_id, display_name = self.build_coverage_selection(selections, name)
+        return await self.import_model(
+            project_id,
+            model_data,
+            name=display_name,
+            catalog_id=catalog_id,
+            set_active=True,
+        )
+
     async def import_model(
         self, project_id: str, model_data: dict,
         name: str | None = None, catalog_id: str | None = None, set_active: bool = True,
     ) -> PlutoModel:
         from sqlalchemy.orm.attributes import flag_modified
 
-        validated = PlutoModelSchema.model_validate(model_data)
+        incoming_meta = dict(model_data.get("_meta") or {})
+        # Strip meta before schema validation (schema does not declare _meta)
+        payload = {k: v for k, v in model_data.items() if k != "_meta"}
+        validated = PlutoModelSchema.model_validate(payload)
         dumped = validated.model_dump()
         display_name = name or catalog_id or "Imported Model"
 
@@ -684,6 +852,7 @@ class PlutoService:
             await self._deactivate_all(project_id)
 
         dumped["_meta"] = {
+            **incoming_meta,
             "name": display_name,
             "catalog_id": catalog_id,
             "is_active": set_active,

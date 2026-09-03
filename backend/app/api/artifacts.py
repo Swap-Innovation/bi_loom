@@ -22,11 +22,16 @@ async def upload_artifact(
         from app.core.exceptions import ValidationError
         raise ValidationError(f"File exceeds max size of {settings.max_upload_size_mb}MB")
 
-    allowed = {".zip", ".xml", ".json", ".sql"}
+    allowed = {
+        ".zip", ".xml", ".json", ".sql",
+        ".biar", ".lcmbiar", ".wid", ".rep", ".unv", ".unx", ".qry",
+    }
     ext = "." + file.filename.rsplit(".", 1)[-1].lower() if "." in (file.filename or "") else ""
     if ext not in allowed:
         from app.core.exceptions import ValidationError
-        raise ValidationError(f"File type {ext} not allowed")
+        raise ValidationError(
+            f"File type {ext} not allowed. Use ZIP, XML, BIAR/LCMBIAR, WID, REP, UNV/UNX, JSON, or SQL."
+        )
 
     service = ArtifactService(db)
     artifact = await service.upload(project_id, file.filename or "upload", content)

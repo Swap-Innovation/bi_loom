@@ -29,11 +29,13 @@ def list_catalog_models() -> list[dict[str, Any]]:
         catalog_id = path.stem
         parent_project = path.parent.parent.name if path.parent.name == "target" else path.stem
         tables = data.get("tables", [])
+        table_names = [t.get("name", "") for t in tables if t.get("name")]
         models.append({
             "catalog_id": catalog_id,
             "name": _catalog_name(catalog_id, tables, parent_project),
             "description": _catalog_description(catalog_id, tables, parent_project),
             "table_count": len(tables),
+            "table_names": table_names,
             "column_count": len(data.get("columns", [])),
             "measure_count": len(data.get("measures", [])),
             "relationship_count": len(data.get("relationships", [])),
