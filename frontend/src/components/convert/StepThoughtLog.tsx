@@ -44,7 +44,7 @@ export function StepThoughtLog({ thoughts, running }: StepThoughtLogProps) {
       {running && (
         <p className="text-[11px] text-amber-600 flex items-center gap-1.5 border-t border-border pt-2">
           <Loader2 size={12} className="animate-spin" />
-          Action: executing this conversion step — see Migration Assistant for live stream
+          Action: executing this conversion step — see BI Loom Assistant for live stream
         </p>
       )}
     </div>

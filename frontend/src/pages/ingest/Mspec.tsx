@@ -124,7 +124,7 @@ export function IngestMspecPage() {
               <p className="font-semibold text-dark">MSpec draft ready</p>
               <p className="text-sm text-gray-500 mt-1 max-w-md">
                 Generate writes the parsed BO inventory into a versioned MSpec document used by Target, Mapping, and Convert.
-                Progress streams in Migration Assistant.
+                Progress streams in BI Loom Assistant.
               </p>
             </div>
             <Button

@@ -43,7 +43,7 @@ interface AssistantHistoryContextValue {
 const AssistantHistoryContext = createContext<AssistantHistoryContextValue | null>(null);
 
 const MAX_ENTRIES = 200;
-const STORAGE_PREFIX = 'migration-ai-assistant-history:';
+const STORAGE_PREFIX = 'bi-loom-assistant-history:';
 
 function makeId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;

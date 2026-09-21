@@ -26,7 +26,7 @@ def get_mock_chat_response(message: str, project_context: str, page_context: str
     if ctx.get("mode") == "global":
         if "workflow" in msg or "phase" in msg or "steps" in msg:
             return (
-                "Migration AI follows 5 phases: **Ingest** (upload & parse BO) → **Target** (select Pluto model) "
+                "BI Loom follows 5 phases: **Ingest** (upload & parse BO) → **Target** (select Pluto model) "
                 "→ **Map** (AI semantic mapping) → **Convert** (BO→PBI conversion) → **Deliver** (generate, validate, download). "
                 "Create a project from **Projects**, then upload `sample-data/projects/fixed-telco-orders/artifacts/fixed-telco-orders.zip`."
             )
@@ -36,7 +36,7 @@ def get_mock_chat_response(message: str, project_context: str, page_context: str
                 "upload the ZIP in Ingest, import `target/pluto-model.json` on Target, then run mapping."
             )
         return (
-            "I'm your Migration AI assistant. Open a project to get contextual help, or ask about the workflow, "
+            "I'm your BI Loom assistant. Open a project to get contextual help, or ask about the workflow, "
             "sample-data, or how to start a migration."
         )
 

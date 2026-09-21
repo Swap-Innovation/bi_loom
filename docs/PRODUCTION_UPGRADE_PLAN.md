@@ -1,4 +1,4 @@
-# Production Upgrade Plan — Migration AI Platform
+# Production Upgrade Plan — BI Loom
 
 **Goal:** Transform the MVP wizard into a production-grade BO → Power BI migration studio (Power BI / Tableau class UX).
 
@@ -791,4 +791,4 @@ FEATURE_DARK_MODE=false
 
 ---
 
-*Document version: 1.0 — Generated for Migration AI production upgrade initiative.*
+*Document version: 1.0 — Generated for BI Loom production upgrade initiative.*

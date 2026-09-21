@@ -1,4 +1,6 @@
-# React + TypeScript + Vite
+# BI Loom frontend
+
+React + TypeScript + Vite UI for BI Loom.
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 

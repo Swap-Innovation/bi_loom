@@ -187,7 +187,7 @@ class ChatService:
             page_context=json.dumps(page, default=str),
             history=history or [],
             activity_context=activity_context or "(none)",
-            prompt_template=load_prompt("migration_assistant_v1.txt"),
+            prompt_template=load_prompt("bi_loom_assistant_v1.txt"),
         )
         return {
             "reply": reply,
@@ -227,7 +227,7 @@ class ChatService:
             page_context=json.dumps(page, default=str),
             history=history or [],
             activity_context=activity_context or "(none)",
-            prompt_template=load_prompt("migration_assistant_v1.txt"),
+            prompt_template=load_prompt("bi_loom_assistant_v1.txt"),
         ):
             yield event
 
@@ -246,7 +246,7 @@ class ChatService:
             page_context=json.dumps(page, default=str),
             history=history or [],
             activity_context=activity_context or "(none)",
-            prompt_template=load_prompt("migration_assistant_v1.txt"),
+            prompt_template=load_prompt("bi_loom_assistant_v1.txt"),
         )
         return {"reply": reply, "page": page, "suggestions": [
             "How do I create a project?",

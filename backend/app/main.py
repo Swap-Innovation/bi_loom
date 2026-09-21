@@ -63,8 +63,8 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Migration AI Platform",
-    description="AI-Assisted SAP Business Objects → Power BI Migration",
+    title="BI Loom",
+    description="AI-assisted SAP Business Objects → Power BI migration",
     version="1.0.0",
     lifespan=lifespan,
 )

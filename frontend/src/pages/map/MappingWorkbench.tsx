@@ -381,7 +381,7 @@ export function MappingWorkbench() {
               label="Live field mapping"
             />
             <p className="text-xs text-gray-600 leading-snug">
-              {mapProgress?.step_label || 'Starting pipeline — watch Migration Assistant for agent thoughts'}
+              {mapProgress?.step_label || 'Starting pipeline — watch BI Loom Assistant for agent thoughts'}
             </p>
             {totalCount > 0 && (
               <p className="text-[11px] text-success">

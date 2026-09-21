@@ -359,7 +359,7 @@ export function UploadPage() {
               Drop SAP Business Objects export here
             </p>
             <p className="text-caption mb-5 max-w-md mx-auto">
-              Progress and checklist details stream in Migration Assistant. When ready, continue to Parsing.
+              Progress and checklist details stream in BI Loom Assistant. When ready, continue to Parsing.
             </p>
             <UploadQueue
               ref={queueRef}

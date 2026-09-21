@@ -1,16 +1,18 @@
+name: bi_loom
+
 services:
   postgres:
     image: pgvector/pgvector:pg16
     environment:
       POSTGRES_USER: migration
       POSTGRES_PASSWORD: migration
-      POSTGRES_DB: migration_ai
+      POSTGRES_DB: bi_loom
     ports:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U migration -d migration_ai"]
+      test: ["CMD-SHELL", "pg_isready -U migration -d bi_loom"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -24,7 +26,7 @@ services:
     env_file:
       - secrets/cursor.env
     environment:
-      DATABASE_URL: postgresql+asyncpg://migration:migration@postgres:5432/migration_ai
+      DATABASE_URL: postgresql+asyncpg://migration:migration@postgres:5432/bi_loom
       STORAGE_BACKEND: local
       STORAGE_PATH: /data/artifacts
       CORS_ORIGINS: http://localhost:5173,http://localhost:3000

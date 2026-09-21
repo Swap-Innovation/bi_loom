@@ -1,6 +1,6 @@
-# Migration AI Platform
+# BI Loom
 
-AI-Assisted SAP Business Objects → Power BI Migration Platform (MVP).
+AI-assisted SAP Business Objects → Power BI migration platform.
 
 ## Overview
 

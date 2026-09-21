@@ -45,7 +45,7 @@ export function Dashboard() {
     <div className="max-w-6xl mx-auto px-5 sm:px-8 pb-16">
       {/* Hero — brand + one composition */}
       <section className="pt-10 sm:pt-14 pb-10 animate-rise">
-        <p className="text-eyebrow mb-3">Migration AI</p>
+        <p className="text-eyebrow mb-3">BI Loom</p>
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
           <div className="max-w-2xl">
             <h1 className="text-display">

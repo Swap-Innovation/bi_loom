@@ -153,7 +153,7 @@ export function GeneratePage() {
                 </p>
                 <p className="text-xs text-gray-600 mt-0.5">
                   {(job?.progress as { step_label?: string } | null)?.step_label
-                    || `Status: ${job?.status || activeJob?.status || 'RUNNING'} — watch Migration Assistant for agent steps`}
+                    || `Status: ${job?.status || activeJob?.status || 'RUNNING'} — watch BI Loom Assistant for agent steps`}
                 </p>
               </div>
               <span className="text-caption shrink-0">

@@ -219,7 +219,7 @@ export function ConversionWizard({
         <div className="rounded-lg border border-border bg-surface/50 p-4 space-y-2">
           <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">Step status</p>
           <p className="text-xs text-gray-500 mb-2">
-            Live agent thoughts stream in Migration Assistant while a step runs.
+            Live agent thoughts stream in BI Loom Assistant while a step runs.
           </p>
           <ul className="space-y-2">
             {statusLines.map((t, i) => (

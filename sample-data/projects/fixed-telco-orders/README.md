@@ -1,6 +1,6 @@
 # Fixed Telco Orders — Sample Project
 
-Per-project sample layout used by Migration AI demos.
+Per-project sample layout used by BI Loom demos.
 
 ## Folder structure
 

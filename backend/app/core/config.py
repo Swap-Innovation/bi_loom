@@ -23,7 +23,7 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    database_url: str = "postgresql+asyncpg://migration:migration@localhost:5432/migration_ai"
+    database_url: str = "postgresql+asyncpg://migration:migration@localhost:5432/bi_loom"
     ai_mode: str = "mock"
     openai_api_key: str = ""
     openai_model: str = "gpt-4o-mini"

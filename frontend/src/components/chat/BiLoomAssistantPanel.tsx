@@ -12,7 +12,7 @@ import { cn } from '../../utils/cn';
 import { AiModeBadge } from './AiModeBadge';
 import { ActivityCard } from './ActivityFeed';
 
-interface MigrationAssistantPanelProps {
+interface BiLoomAssistantPanelProps {
   collapsed?: boolean;
   onToggleCollapse?: () => void;
   className?: string;
@@ -27,7 +27,7 @@ function formatTime(ts: number) {
   return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-export function MigrationAssistantPanel({
+export function BiLoomAssistantPanel({
   collapsed = false,
   onToggleCollapse,
   className,
@@ -35,7 +35,7 @@ export function MigrationAssistantPanel({
   onWidthChange,
   minWidth = 280,
   maxWidth = 640,
-}: MigrationAssistantPanelProps) {
+}: BiLoomAssistantPanelProps) {
   const { projectId, pagePath, pageLabel, pageKey } = usePageContext();
   const { events, startAgent, addThought, addAction, completeAgent, failAgent, updateEvent } = useAiActivity();
   const {
@@ -105,7 +105,7 @@ export function MigrationAssistantPanel({
   /** Real wait states only — no fake timed “thinking” script. */
   const beginChatRun = (text: string) => {
     const runId = startAgent(
-      'Migration Assistant',
+      'BI Loom Assistant',
       `Answering: “${text.slice(0, 72)}${text.length > 72 ? '…' : ''}”`,
       pageKey,
     );
@@ -268,7 +268,7 @@ export function MigrationAssistantPanel({
         <Sparkles size={16} className="shrink-0" />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <p className="text-sm font-semibold truncate">Migration Assistant</p>
+            <p className="text-sm font-semibold truncate">BI Loom Assistant</p>
             <AiModeBadge status={aiStatus} compact />
           </div>
           <p className="text-[10px] text-pink-100 truncate">

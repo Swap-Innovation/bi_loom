@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { LayoutDashboard, FolderKanban, Plug } from 'lucide-react';
-import { MigrationAssistantPanel } from '../chat/MigrationAssistantPanel';
+import { BiLoomAssistantPanel } from '../chat/BiLoomAssistantPanel';
 import {
   ActivityHistoryBridge,
   AssistantHistoryProvider,
 } from '../../context/AssistantHistoryContext';
 import { usePageContext } from '../../hooks/usePageContext';
 
-const ASSISTANT_WIDTH_KEY = 'migration-ai-assistant-width';
+const ASSISTANT_WIDTH_KEY = 'bi-loom-assistant-width';
 const DEFAULT_WIDTH = 380;
 
 function AssistantShell({
@@ -39,7 +39,7 @@ function AssistantShell({
   return (
     <AssistantHistoryProvider scope={scope} key={scope}>
       <ActivityHistoryBridge />
-      <MigrationAssistantPanel
+      <BiLoomAssistantPanel
         collapsed={collapsed}
         onToggleCollapse={onToggleCollapse}
         width={width}
@@ -75,14 +75,14 @@ export function Layout() {
                     'linear-gradient(145deg, #0F172A 0%, #1E293B 55%, #C8105C 160%)',
                 }}
               />
-              <span className="relative text-white font-bold text-[11px] tracking-tight">MA</span>
+              <span className="relative text-white font-bold text-[11px] tracking-tight">BL</span>
             </div>
             <div className="min-w-0 leading-tight">
               <p className="font-semibold text-[15px] tracking-tight text-ink truncate">
-                Migration AI
+                BI Loom
               </p>
               <p className="text-[10px] text-ink-faint tracking-wide uppercase hidden sm:block">
-                Enterprise migration studio
+                AI report migration studio
               </p>
             </div>
           </div>
