@@ -64,7 +64,7 @@ export function Integrations() {
           <span className="font-semibold text-ink">Deliver</span>
           . Select an active semantic model before AI mapping; Convert unlocks Deliver.
         </p>
-        <ul className="text-[13px] space-y-2 text-ink-muted font-mono bg-white/60 border border-border rounded-lg px-5 py-4">
+        <ul className="text-[13px] space-y-2 text-ink-muted font-mono bg-white border border-border rounded-lg px-5 py-4">
           <li>sample-data/projects/fixed-telco-orders/</li>
           <li>…/artifacts/fixed-telco-orders.zip</li>
           <li>…/target/pluto-model.json</li>

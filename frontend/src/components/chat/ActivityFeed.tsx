@@ -27,7 +27,7 @@ function StepRow({ step }: { step: AiActivityStep }) {
   return (
     <div className="flex items-start gap-1.5 text-[11px]">
       {isThought ? (
-        <Brain size={11} className={cn('mt-0.5 shrink-0', step.status === 'running' ? 'text-violet-500' : 'text-violet-400')} />
+        <Brain size={11} className={cn('mt-0.5 shrink-0', step.status === 'running' ? 'text-primary' : 'text-ink-faint')} />
       ) : (
         <Zap size={11} className={cn('mt-0.5 shrink-0', step.status === 'running' ? 'text-amber-500' : 'text-amber-400')} />
       )}
@@ -35,7 +35,7 @@ function StepRow({ step }: { step: AiActivityStep }) {
       <div className="min-w-0 flex-1">
         <span className={cn(
           'uppercase tracking-wide text-[9px] font-semibold mr-1.5',
-          isThought ? 'text-violet-500' : 'text-amber-600',
+          isThought ? 'text-primary' : 'text-warning',
         )}
         >
           {isThought ? 'Thinking' : 'Action'}
@@ -63,7 +63,7 @@ export function ActivityCard({ event }: { event: AiActivityEvent }) {
     <div
       className={cn(
         'rounded-lg border text-xs overflow-hidden',
-        event.status === 'running' && 'border-primary/30 bg-pink-50/50',
+        event.status === 'running' && 'border-primary/30 bg-blue-50/50',
         event.status === 'complete' && 'border-border bg-white',
         event.status === 'error' && 'border-red-200 bg-red-50/50',
         event.status === 'pending' && 'border-border bg-white',
@@ -96,7 +96,7 @@ export function ActivityCard({ event }: { event: AiActivityEvent }) {
         <div className="border-t border-border/60 bg-white/70 px-2.5 py-2 space-y-2">
           {thoughts.length > 0 && (
             <div className="space-y-1">
-              <p className="text-[9px] font-semibold uppercase tracking-wide text-violet-500 flex items-center gap-1">
+              <p className="text-[9px] font-medium uppercase tracking-wide text-primary flex items-center gap-1">
                 <Brain size={10} /> Thought process
               </p>
               {thoughts.map((step) => (

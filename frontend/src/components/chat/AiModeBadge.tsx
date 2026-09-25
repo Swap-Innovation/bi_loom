@@ -38,7 +38,7 @@ export function AiModeBadge({ status, className, compact = false }: AiModeBadgeP
       <span
         className={cn(
           'inline-flex items-center gap-1.5 text-[10px] font-medium',
-          isLive ? 'text-green-100' : 'text-pink-100',
+          isLive ? 'text-success' : 'text-ink-muted',
           className,
         )}
         title={providerLabel(status)}
@@ -46,7 +46,7 @@ export function AiModeBadge({ status, className, compact = false }: AiModeBadgeP
         <span
           className={cn(
             'h-1.5 w-1.5 rounded-full',
-            isLive ? 'bg-green-300 animate-pulse' : 'bg-white/50',
+            isLive ? 'bg-success animate-pulse' : 'bg-ink-faint',
           )}
         />
         {status.label}

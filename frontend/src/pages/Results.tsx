@@ -63,7 +63,7 @@ export function ResultsPage() {
       </p>
 
       {score !== null && score !== undefined && (
-        <div className="mb-6 p-6 bg-white rounded-xl border border-border text-center">
+        <div className="mb-6 p-6 bg-white rounded-lg border border-border text-center">
           <p className="text-sm text-gray-500">Migration Score</p>
           <p className="text-5xl font-bold text-primary">{score}%</p>
         </div>

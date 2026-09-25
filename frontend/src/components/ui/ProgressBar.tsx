@@ -15,11 +15,11 @@ export function ProgressBar({ value, max = 100, label, showPercent = true, class
     <div className={className}>
       {(label || showPercent) && (
         <div className="flex justify-between text-xs mb-1">
-          {label && <span className="text-gray-500">{label}</span>}
+          {label && <span className="text-ink-muted">{label}</span>}
           {showPercent && <span className="text-primary font-medium">{Math.round(pct)}%</span>}
         </div>
       )}
-      <div className={cn('bg-gray-100 rounded-full overflow-hidden', size === 'sm' ? 'h-1.5' : 'h-2.5')}>
+      <div className={cn('bg-[#E8EAED] rounded-full overflow-hidden', size === 'sm' ? 'h-1' : 'h-1.5')}>
         <div className="h-full bg-primary rounded-full transition-all duration-300" style={{ width: `${pct}%` }} />
       </div>
     </div>

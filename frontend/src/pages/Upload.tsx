@@ -284,14 +284,14 @@ export function UploadPage() {
             'text-left rounded-lg border px-5 py-4 transition-colors',
             source === 'local'
               ? 'border-primary/40 bg-primary-soft ring-1 ring-primary/20'
-              : 'border-border bg-white hover:border-border-strong hover:bg-slate-50/80',
+              : 'border-border bg-white hover:border-border-strong hover:bg-surface',
           )}
         >
           <div className="flex items-start gap-3">
             <span
               className={cn(
                 'mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md',
-                source === 'local' ? 'bg-primary text-white' : 'bg-slate-100 text-ink-muted',
+                source === 'local' ? 'bg-primary text-white' : 'bg-[#E8EAED] text-ink-muted',
               )}
             >
               <FolderOpen size={18} strokeWidth={1.75} />
@@ -316,14 +316,14 @@ export function UploadPage() {
             'text-left rounded-lg border px-5 py-4 transition-colors',
             source === 'sapbo'
               ? 'border-primary/40 bg-primary-soft ring-1 ring-primary/20'
-              : 'border-border bg-white hover:border-border-strong hover:bg-slate-50/80',
+              : 'border-border bg-white hover:border-border-strong hover:bg-surface',
           )}
         >
           <div className="flex items-start gap-3">
             <span
               className={cn(
                 'mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md',
-                source === 'sapbo' ? 'bg-primary text-white' : 'bg-slate-100 text-ink-muted',
+                source === 'sapbo' ? 'bg-primary text-white' : 'bg-[#E8EAED] text-ink-muted',
               )}
             >
               <Plug size={18} strokeWidth={1.75} />
@@ -464,7 +464,7 @@ export function UploadPage() {
           className="rounded-lg border border-border bg-white px-6 py-10 sm:px-10"
         >
           <div className="max-w-xl mx-auto text-center">
-            <span className="inline-flex items-center justify-center h-12 w-12 rounded-md bg-slate-100 text-ink-muted mb-4">
+            <span className="inline-flex items-center justify-center h-12 w-12 rounded-md bg-[#E8EAED] text-ink-muted mb-4">
               <Plug size={22} strokeWidth={1.5} />
             </span>
             <div className="flex items-center justify-center gap-2 mb-2">

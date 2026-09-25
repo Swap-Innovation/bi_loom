@@ -17,11 +17,11 @@ export function Card({ children, className, title, action }: CardProps) {
     >
       {(title || action) && (
         <div className="flex items-center justify-between px-5 py-3.5 border-b border-border">
-          {title && <h3 className="text-[13px] font-semibold tracking-tight text-ink">{title}</h3>}
+          {title && <h3 className="text-sm font-medium text-ink">{title}</h3>}
           {action}
         </div>
       )}
-      <div className={cn(!(title || action) && 'p-5', (title || action) && 'p-5')}>{children}</div>
+      <div className="p-5">{children}</div>
     </div>
   );
 }
@@ -40,7 +40,7 @@ export function StatCard({
   return (
     <div className={cn('min-w-0 py-1', className)}>
       <p className="text-eyebrow mb-2">{label}</p>
-      <p className="text-[1.75rem] font-bold tracking-tight text-ink tabular-nums leading-none">
+      <p className="text-[1.75rem] font-normal tracking-normal text-ink tabular-nums leading-none">
         {value}
       </p>
       {subtext && <p className="text-caption mt-2">{subtext}</p>}

@@ -143,7 +143,7 @@ export function GeneratePage() {
       )}
 
       {generating && (
-        <Card className="mb-6 border-primary/30 bg-pink-50/40">
+        <Card className="mb-6 border-primary/30 bg-blue-50/40">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
               <Loader2 className="animate-spin text-primary shrink-0" size={20} />

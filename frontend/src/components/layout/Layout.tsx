@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { LayoutDashboard, FolderKanban, Plug } from 'lucide-react';
+import { ProductMark } from '../ui/ProductMark';
 import { BiLoomAssistantPanel } from '../chat/BiLoomAssistantPanel';
 import {
   ActivityHistoryBridge,
@@ -44,7 +45,7 @@ function AssistantShell({
         onToggleCollapse={onToggleCollapse}
         width={width}
         onWidthChange={setWidth}
-        className="sticky top-0 h-[calc(100vh-3.75rem)]"
+        className="sticky top-0 h-[calc(100vh-4rem)]"
       />
     </AssistantHistoryProvider>
   );
@@ -61,33 +62,21 @@ export function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col app-canvas">
-      <header className="shrink-0 border-b border-border/80 bg-white/80 backdrop-blur-md">
-        <div className="px-5 sm:px-8 py-3 flex items-center justify-between gap-6">
+      <header className="shrink-0 border-b border-border bg-white g-elev-1 z-20">
+        <div className="px-4 sm:px-6 h-16 flex items-center justify-between gap-6">
           <div className="flex items-center gap-3 min-w-0">
-            <div
-              className="relative w-8 h-8 rounded-md bg-ink flex items-center justify-center shrink-0 overflow-hidden"
-              aria-hidden
-            >
-              <span
-                className="absolute inset-0 opacity-90"
-                style={{
-                  background:
-                    'linear-gradient(145deg, #0F172A 0%, #1E293B 55%, #C8105C 160%)',
-                }}
-              />
-              <span className="relative text-white font-bold text-[11px] tracking-tight">BL</span>
-            </div>
+            <ProductMark size={32} />
             <div className="min-w-0 leading-tight">
-              <p className="font-semibold text-[15px] tracking-tight text-ink truncate">
+              <p className="font-medium text-[16px] text-ink truncate">
                 BI Loom
               </p>
-              <p className="text-[10px] text-ink-faint tracking-wide uppercase hidden sm:block">
-                AI report migration studio
+              <p className="text-[12px] text-ink-muted hidden sm:block">
+                Report migration
               </p>
             </div>
           </div>
 
-          <nav className="flex items-center gap-0.5" aria-label="Primary">
+          <nav className="flex items-center gap-1" aria-label="Primary">
             {NAV.map(({ to, icon: Icon, label }) => (
               <NavLink
                 key={to}
@@ -95,19 +84,19 @@ export function Layout() {
                 end={to === '/'}
                 className={({ isActive }) =>
                   [
-                    'relative flex items-center gap-2 px-3.5 py-2 text-[13px] font-medium transition-colors rounded-md',
+                    'relative flex items-center gap-2 px-4 h-10 text-sm font-medium transition-colors rounded-[4px]',
                     isActive
-                      ? 'text-ink'
-                      : 'text-ink-muted hover:text-ink hover:bg-black/[0.03]',
+                      ? 'text-primary'
+                      : 'text-ink-muted hover:text-ink hover:bg-surface',
                   ].join(' ')
                 }
               >
                 {({ isActive }) => (
                   <>
-                    <Icon size={15} strokeWidth={isActive ? 2.25 : 1.75} />
+                    <Icon size={18} strokeWidth={isActive ? 2 : 1.75} />
                     <span>{label}</span>
                     {isActive && (
-                      <span className="absolute left-3 right-3 -bottom-[0.7rem] h-0.5 rounded-full bg-primary" />
+                      <span className="absolute left-3 right-3 -bottom-[13px] h-[3px] rounded-t-full bg-primary" />
                     )}
                   </>
                 )}

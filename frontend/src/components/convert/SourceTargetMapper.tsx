@@ -47,7 +47,7 @@ export function SourceTargetMapper({ items, selectedId, onSelect }: SourceTarget
             type="button"
             onClick={() => onSelect?.(item)}
             className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left text-sm transition-colors ${
-              selected ? 'bg-pink-50 border border-primary/30' : 'hover:bg-surface border border-transparent'
+              selected ? 'bg-blue-50 border border-primary/30' : 'hover:bg-surface border border-transparent'
             }`}
           >
             <span className="flex-1 truncate font-mono text-xs text-gray-700" title={source}>

@@ -156,7 +156,7 @@ export function ModelCatalog({
 
   return (
     <div className="space-y-4">
-      <div className="sticky top-0 z-10 rounded-xl border border-border bg-white/95 backdrop-blur px-4 py-3 shadow-sm">
+      <div className="sticky top-0 z-10 rounded-lg border border-border bg-white px-4 py-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="text-sm font-medium text-gray-800">Coverage selection</p>
@@ -175,7 +175,7 @@ export function ModelCatalog({
         </div>
       </div>
 
-      <div className="border border-border rounded-xl bg-white overflow-hidden">
+      <div className="border border-border rounded-lg bg-white overflow-hidden">
         <button
           type="button"
           className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-surface/60"

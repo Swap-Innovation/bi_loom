@@ -161,7 +161,7 @@ export function TargetModelPage() {
         <div className="space-y-6">
           <Card className="!p-5">
             <div className="flex items-start gap-3">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-slate-100 text-ink-muted">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#E8EAED] text-ink-muted">
                 <BookOpen size={18} strokeWidth={1.75} />
               </span>
               <div className="min-w-0 flex-1">
@@ -183,7 +183,7 @@ export function TargetModelPage() {
       ) : tab === 'powerbi' ? (
         <Card>
           <div className="max-w-xl mx-auto text-center py-4">
-            <span className="inline-flex items-center justify-center h-12 w-12 rounded-md bg-slate-100 text-ink-muted mb-4">
+            <span className="inline-flex items-center justify-center h-12 w-12 rounded-md bg-[#E8EAED] text-ink-muted mb-4">
               <Plug size={22} strokeWidth={1.5} />
             </span>
             <div className="flex items-center justify-center gap-2 mb-2">
@@ -263,7 +263,7 @@ export function TargetModelPage() {
           )}
 
           {activeModel && (
-            <Card className="border-primary/30 bg-pink-50 !p-4">
+            <Card className="border-primary/30 bg-blue-50 !p-4">
               <div className="flex items-center gap-3">
                 <Database className="text-primary" size={24} />
                 <div className="flex-1">

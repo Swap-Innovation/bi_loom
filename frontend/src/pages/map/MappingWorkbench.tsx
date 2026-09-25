@@ -360,7 +360,7 @@ export function MappingWorkbench() {
       </div>
 
       {mappingRunning && (
-        <Card className="border-primary/30 bg-pink-50/40">
+        <Card className="border-primary/30 bg-blue-50/40">
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-3 text-sm">
               <p className="font-medium text-gray-800">

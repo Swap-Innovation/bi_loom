@@ -117,7 +117,7 @@ export function IngestMspecPage() {
 
         <Card>
           <div className="flex flex-col items-center text-center py-8 px-4 gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100">
+            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100">
               <FileText size={22} className="text-primary" />
             </div>
             <div>
@@ -225,7 +225,7 @@ export function IngestMspecPage() {
             type="button"
             onClick={() => setActiveTab(s.id)}
             className={`p-3 border rounded-lg text-center transition-colors ${
-              activeTab === s.id ? 'border-primary bg-pink-50' : 'border-border bg-white hover:border-primary/50'
+              activeTab === s.id ? 'border-primary bg-blue-50' : 'border-border bg-white hover:border-primary/50'
             }`}
           >
             <p className="text-xs text-gray-500">{s.label}</p>
@@ -235,7 +235,7 @@ export function IngestMspecPage() {
       </div>
 
       {highlightItem && (
-        <Card className="!p-3 bg-pink-50 border-primary/30">
+        <Card className="!p-3 bg-blue-50 border-primary/30">
           <p className="text-xs text-gray-500 mb-1">Selected from search — {highlightItem.section}</p>
           <pre className="text-[10px] overflow-x-auto font-mono">{JSON.stringify(highlightItem.item, null, 2)}</pre>
           <button type="button" className="text-xs text-primary mt-2" onClick={() => setHighlightItem(null)}>

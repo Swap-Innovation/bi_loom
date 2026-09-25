@@ -14,7 +14,7 @@ interface StepThoughtLogProps {
 export function StepThoughtLog({ thoughts, running }: StepThoughtLogProps) {
   return (
     <div className="rounded-lg border border-border bg-surface/50 p-4 space-y-3">
-      <p className="text-xs font-semibold uppercase tracking-wide text-violet-500">Thought process</p>
+      <p className="text-xs font-medium uppercase tracking-wide text-primary">Thought process</p>
       <ol className="space-y-2">
         {thoughts.map((t, i) => {
           const Icon = running && i === thoughts.findIndex((x) => !x.done)
@@ -34,7 +34,7 @@ export function StepThoughtLog({ thoughts, running }: StepThoughtLogProps) {
                 )}
               />
               <div className="min-w-0">
-                <span className="text-[9px] font-semibold uppercase tracking-wide text-violet-400 mr-1.5">Thinking</span>
+                <span className="text-[9px] font-medium uppercase tracking-wide text-primary mr-1.5">Thinking</span>
                 <span className={cn(t.done ? 'text-gray-700' : 'text-gray-500')}>{t.line}</span>
               </div>
             </li>

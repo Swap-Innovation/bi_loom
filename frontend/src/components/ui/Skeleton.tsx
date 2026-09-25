@@ -1,12 +1,12 @@
 import { cn } from '../../utils/cn';
 
 export function Skeleton({ className }: { className?: string }) {
-  return <div className={cn('animate-pulse rounded-md bg-gray-200', className)} />;
+  return <div className={cn('animate-pulse rounded bg-[#E8EAED]', className)} />;
 }
 
 export function SkeletonCard() {
   return (
-    <div className="border border-border rounded-xl p-6 space-y-3">
+    <div className="border border-border rounded-lg p-6 space-y-3 bg-white">
       <Skeleton className="h-4 w-1/3" />
       <Skeleton className="h-8 w-1/2" />
       <Skeleton className="h-3 w-full" />

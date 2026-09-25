@@ -88,7 +88,7 @@ export function Projects() {
             <div>
               <label className="block text-[12px] font-semibold text-ink-muted mb-1.5">Project name</label>
               <input
-                className="w-full border border-border rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/25 focus:border-primary/40"
+                className="field-input"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Fixed Telco Orders Migration"
@@ -97,7 +97,7 @@ export function Projects() {
             <div>
               <label className="block text-[12px] font-semibold text-ink-muted mb-1.5">Description</label>
               <textarea
-                className="w-full border border-border rounded-md px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-primary/25 focus:border-primary/40"
+                className="field-input"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={2}
@@ -106,11 +106,11 @@ export function Projects() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-[12px] font-semibold text-ink-muted mb-1.5">Source</label>
-                <input className="w-full border border-border rounded-md px-3 py-2 text-sm bg-surface text-ink-muted" value="SAP Business Objects" readOnly />
+                <input className="field-input" value="SAP Business Objects" readOnly />
               </div>
               <div>
                 <label className="block text-[12px] font-semibold text-ink-muted mb-1.5">Target</label>
-                <input className="w-full border border-border rounded-md px-3 py-2 text-sm bg-surface text-ink-muted" value="Power BI" readOnly />
+                <input className="field-input" value="Power BI" readOnly />
               </div>
             </div>
             <div className="flex gap-2 pt-1">
@@ -134,7 +134,7 @@ export function Projects() {
           />
         </Card>
       ) : projects?.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-border-strong bg-white/50 px-6 py-14">
+        <div className="rounded-lg border border-dashed border-border bg-white px-6 py-14">
           <EmptyState
             title="No projects yet"
             description="Create a project or use the sample-data template to get started."
@@ -151,11 +151,11 @@ export function Projects() {
             <li key={project.id} className="flex items-stretch group">
               <Link
                 to={`/projects/${project.id}/overview`}
-                className="flex-1 min-w-0 flex items-center gap-4 px-5 py-4 hover:bg-slate-50/80 transition-colors"
+                className="flex-1 min-w-0 flex items-center gap-4 px-5 py-4 hover:bg-surface transition-colors"
               >
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2.5 flex-wrap">
-                    <h3 className="font-semibold text-[14px] tracking-tight text-ink group-hover:text-primary transition-colors">
+                    <h3 className="font-medium text-sm text-ink group-hover:text-primary transition-colors">
                       {project.name}
                     </h3>
                     <StatusBadge status={project.status} />

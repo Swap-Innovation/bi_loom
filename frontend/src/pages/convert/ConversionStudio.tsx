@@ -202,7 +202,7 @@ export function ConversionStudio() {
         </p>
       </div>
 
-      <div className="bg-white rounded-xl border border-border shadow-sm p-4 md:p-6">
+      <div className="bg-white rounded-lg border border-border p-4 md:p-6">
         <ConversionWizard
           projectId={projectId!}
           workspace={workspace}

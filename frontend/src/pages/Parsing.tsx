@@ -216,7 +216,7 @@ export function ParsingPage() {
       </div>
 
       {grandTotal !== undefined && parseStatus?.status === 'COMPLETED' && (
-        <div className="mb-4 p-4 bg-white border border-border rounded-xl flex items-center justify-between">
+        <div className="mb-4 p-4 bg-white border border-border rounded-lg flex items-center justify-between">
           <span className="text-sm text-gray-500">Total assets parsed</span>
           <span className="text-2xl font-bold text-primary">{grandTotal}</span>
         </div>
@@ -243,7 +243,7 @@ export function ParsingPage() {
       )}
 
       {parseStatus?.status === 'COMPLETED' && !(hierarchy?.documents?.length) && (
-        <div className="mb-6 p-4 bg-white border border-border rounded-xl flex items-center justify-between gap-3 flex-wrap">
+        <div className="mb-6 p-4 bg-white border border-border rounded-lg flex items-center justify-between gap-3 flex-wrap">
           <p className="text-sm text-gray-600">Parsing complete — draft ready for MSpec.</p>
           <Link to={`/projects/${projectId}/ingest/mspec`}>
             <Button size="sm">

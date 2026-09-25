@@ -39,8 +39,8 @@ export function PhaseSidebar() {
   }, [workflow]);
 
   return (
-    <aside className="flex w-60 shrink-0 flex-col border-r border-border bg-white/90 backdrop-blur-sm min-h-0">
-      <div className="sticky top-0 z-10 border-b border-border bg-white/95 px-4 py-3.5">
+    <aside className="flex w-60 shrink-0 flex-col border-r border-border bg-surface min-h-0">
+      <div className="sticky top-0 z-10 border-b border-border bg-surface px-4 py-3.5">
         <div className="flex items-baseline justify-between gap-2">
           <h2 className="text-eyebrow">Workflow</h2>
           <span className="text-[11px] tabular-nums text-ink-faint font-medium">
@@ -48,7 +48,7 @@ export function PhaseSidebar() {
           </span>
         </div>
         <div
-          className="mt-2.5 h-1 w-full overflow-hidden rounded-sm bg-slate-100"
+          className="mt-2.5 h-1 w-full overflow-hidden rounded-full bg-[#E8EAED]"
           role="progressbar"
           aria-valuenow={progress.pct}
           aria-valuemin={0}
@@ -56,7 +56,7 @@ export function PhaseSidebar() {
           aria-label="Migration progress"
         >
           <div
-            className="h-full rounded-sm bg-primary transition-all duration-300"
+            className="h-full rounded-full bg-primary transition-all duration-300"
             style={{ width: `${progress.pct}%` }}
           />
         </div>

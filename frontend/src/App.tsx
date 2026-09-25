@@ -38,7 +38,14 @@ export default function App() {
       <AiActivityProvider>
         <JobTrayProvider>
           <BrowserRouter>
-            <Toaster position="top-right" richColors closeButton />
+            <Toaster
+              position="bottom-left"
+              closeButton
+              toastOptions={{
+                className: 'font-sans text-sm',
+                style: { fontFamily: 'Roboto, sans-serif', borderRadius: 8 },
+              }}
+            />
             <Routes>
               <Route element={<Layout />}>
                 <Route path="/" element={<Dashboard />} />

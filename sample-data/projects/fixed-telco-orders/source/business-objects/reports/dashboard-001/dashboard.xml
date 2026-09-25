@@ -7,7 +7,7 @@
   <canvas name="Executive Overview">
     <component name="Revenue KPI" type="metric" x="24" y="24" width="200" height="120" sourceReport="Fixed Telco Orders">
       <binding name="TotalRevenue"/>
-      <formatting background="#FFFFFF" color="#E20074"/>
+      <formatting background="#FFFFFF" color="#1A73E8"/>
     </component>
     <component name="Orders Chart" type="chart" x="240" y="24" width="480" height="280" sourceReport="Fixed Telco Orders" chartType="bar">
       <binding name="REGION"/>

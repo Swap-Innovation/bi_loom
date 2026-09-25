@@ -6,10 +6,10 @@ import { useMemo, useState } from 'react';
 import { cn } from '../../utils/cn';
 
 const PRODUCT_COLORS: Record<string, string> = {
-  webi: 'bg-blue-50 text-blue-700 border-blue-200',
-  crystal: 'bg-violet-50 text-violet-700 border-violet-200',
-  dashboard: 'bg-amber-50 text-amber-800 border-amber-200',
-  analysis: 'bg-teal-50 text-teal-700 border-teal-200',
+  webi: 'bg-primary-soft text-primary border-primary/20',
+  crystal: 'bg-[#FCE8E6] text-[#C5221F] border-[#F9AB9F]',
+  dashboard: 'bg-[#FEF7E0] text-[#E37400] border-[#FDE293]',
+  analysis: 'bg-[#E6F4EA] text-success border-[#A8DAB5]',
 };
 
 const PRODUCT_ICONS: Record<string, React.ElementType> = {
@@ -137,7 +137,7 @@ export function DocumentHierarchy({
   }
 
   return (
-    <section className="overflow-hidden rounded-xl border border-border bg-white shadow-sm">
+    <section className="overflow-hidden rounded-lg border border-border bg-white ">
       {/* Header */}
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-border px-5 py-4">
         <div className="min-w-0">

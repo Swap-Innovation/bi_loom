@@ -21,14 +21,14 @@ export function TargetSchemaTree({ model, loading, onSelectColumn, onSelectMeasu
 
   if (!model) {
     return (
-      <div className="border border-dashed border-border rounded-xl h-full flex items-center justify-center p-4 text-center text-xs text-gray-400">
+      <div className="border border-dashed border-border rounded-lg h-full flex items-center justify-center p-4 text-center text-xs text-gray-400">
         Select a target semantic model first
       </div>
     );
   }
 
   return (
-    <div className="border border-border rounded-xl bg-white overflow-hidden h-full flex flex-col">
+    <div className="border border-border rounded-lg bg-white overflow-hidden h-full flex flex-col">
       <div className="px-3 py-2 bg-surface border-b border-border shrink-0">
         <p className="text-xs font-semibold">Target Pluto Schema</p>
         <p className="text-[10px] text-gray-400">Click column/measure to assign to selected mapping</p>
@@ -63,7 +63,7 @@ export function TargetSchemaTree({ model, loading, onSelectColumn, onSelectMeasu
                     <li key={col.id}>
                       <button
                         type="button"
-                        className="w-full text-left px-2 py-0.5 rounded text-[11px] font-mono hover:bg-pink-50 hover:text-primary"
+                        className="w-full text-left px-2 py-0.5 rounded text-[11px] font-mono hover:bg-blue-50 hover:text-primary"
                         onClick={() => onSelectColumn?.(table.name, col.name)}
                       >
                         ⬦ {col.name} <span className="text-gray-400">{col.type}</span>
@@ -74,7 +74,7 @@ export function TargetSchemaTree({ model, loading, onSelectColumn, onSelectMeasu
                     <li key={m.id}>
                       <button
                         type="button"
-                        className="w-full text-left px-2 py-0.5 rounded text-[11px] font-mono hover:bg-pink-50 hover:text-primary flex items-center gap-1"
+                        className="w-full text-left px-2 py-0.5 rounded text-[11px] font-mono hover:bg-blue-50 hover:text-primary flex items-center gap-1"
                         onClick={() => onSelectMeasure?.(table.name, m.name)}
                       >
                         <BarChart3 size={10} /> {m.name}

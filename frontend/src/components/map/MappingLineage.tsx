@@ -40,7 +40,7 @@ export function MappingLineage({ mapping, className, compact }: MappingLineagePr
   }
 
   return (
-    <div className={cn('rounded-xl border border-border bg-surface/50 p-4', className)}>
+    <div className={cn('rounded-lg border border-border bg-surface/50 p-4', className)}>
       <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 mb-3">
         Mapping lineage
       </p>

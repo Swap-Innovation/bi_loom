@@ -85,7 +85,7 @@ export function ConversionItemsTable({
         <span className="text-xs text-gray-500 ml-auto">{filtered.length} items</span>
       </div>
 
-      <div className="border border-border rounded-xl overflow-hidden bg-white max-h-64 overflow-y-auto">
+      <div className="border border-border rounded-lg overflow-hidden bg-white max-h-64 overflow-y-auto">
         <table className="w-full text-sm">
           <thead className="bg-surface border-b border-border sticky top-0">
             <tr>
@@ -103,7 +103,7 @@ export function ConversionItemsTable({
                 key={item.id}
                 onClick={() => onSelect?.(item)}
                 className={`border-b border-border cursor-pointer hover:bg-surface ${
-                  selectedId === item.id ? 'bg-pink-50' : ''
+                  selectedId === item.id ? 'bg-blue-50' : ''
                 }`}
               >
                 <td className="px-3 py-2 font-mono text-xs">{item.source_name}</td>

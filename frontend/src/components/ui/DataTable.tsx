@@ -44,17 +44,17 @@ export function DataTable<T extends RowData>({
   if (loading) return <SkeletonTable />;
 
   if (!data.length) {
-    return <p className="text-sm text-gray-500 text-center py-8">{emptyMessage}</p>;
+    return <p className="text-sm text-ink-muted text-center py-8">{emptyMessage}</p>;
   }
 
   return (
-    <div className="border border-border rounded-xl overflow-hidden bg-white">
+    <div className="border border-border rounded-lg overflow-hidden bg-white">
       <table className="w-full text-sm">
         <thead className="bg-surface border-b border-border">
           {table.getHeaderGroups().map((hg) => (
             <tr key={hg.id}>
               {hg.headers.map((header) => (
-                <th key={header.id} className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                <th key={header.id} className="px-4 py-3 text-left text-xs font-medium text-ink-muted">
                   {header.isPlaceholder ? null : (
                     <button
                       type="button"
@@ -63,7 +63,7 @@ export function DataTable<T extends RowData>({
                     >
                       {flexRender(header.column.columnDef.header, header.getContext())}
                       {header.column.getCanSort() && (
-                        <span className="text-gray-300">
+                        <span className="text-ink-faint">
                           {header.column.getIsSorted() === 'asc' ? <ChevronUp size={14} /> :
                            header.column.getIsSorted() === 'desc' ? <ChevronDown size={14} /> :
                            <ChevronsUpDown size={14} />}
@@ -87,7 +87,7 @@ export function DataTable<T extends RowData>({
                 className={cn(
                   'border-b border-border last:border-0 transition-colors',
                   onRowClick && 'cursor-pointer hover:bg-surface',
-                  selected && 'bg-pink-50',
+                  selected && 'bg-primary-soft',
                 )}
               >
                 {row.getVisibleCells().map((cell) => (

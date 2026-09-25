@@ -41,7 +41,7 @@ export function MappingGrid({
   }
 
   return (
-    <div className="border border-border rounded-xl overflow-hidden bg-white h-full flex flex-col">
+    <div className="border border-border rounded-lg overflow-hidden bg-white h-full flex flex-col">
       <div className="overflow-auto flex-1">
         <table className="w-full text-sm">
           <thead className="bg-surface border-b border-border sticky top-0 z-10">
@@ -65,7 +65,7 @@ export function MappingGrid({
                   id={`mapping-row-${m.id}`}
                   onClick={() => onSelect(m)}
                   className={`border-b border-border cursor-pointer transition-colors ${
-                    selected ? 'bg-pink-50' : 'hover:bg-surface'
+                    selected ? 'bg-blue-50' : 'hover:bg-surface'
                   }`}
                 >
                   <td className="px-3 py-2">

@@ -25,26 +25,26 @@ export function ProjectHeader({ breadcrumb = [] }: ProjectHeaderProps) {
   const continueAction = useJourneyContinue(projectId);
 
   return (
-    <header className="bg-white/90 backdrop-blur-md border-b border-border px-5 sm:px-6 py-3.5">
+    <header className="bg-white border-b border-border px-5 sm:px-6 py-3">
       <div className="flex items-center justify-between gap-4">
         <div className="min-w-0">
           <Link
             to="/projects"
-            className="inline-flex items-center gap-1 text-[11px] font-medium text-ink-faint hover:text-primary mb-1"
+            className="inline-flex items-center gap-1 text-xs font-medium text-ink-muted hover:text-primary mb-1"
           >
             <ArrowLeft size={13} /> Projects
           </Link>
           <div className="flex items-center gap-2.5 flex-wrap">
-            <h1 className="text-[17px] font-bold tracking-tight truncate text-ink">
+            <h1 className="text-xl font-normal truncate text-ink">
               {project?.name ?? 'Loading...'}
             </h1>
             {project && <StatusBadge status={project.status} />}
           </div>
           {project?.description && (
-            <p className="text-[13px] text-ink-muted mt-0.5 truncate">{project.description}</p>
+            <p className="text-sm text-ink-muted mt-0.5 truncate">{project.description}</p>
           )}
           {breadcrumb.length > 0 && (
-            <nav className="flex items-center gap-1 text-[11px] text-ink-faint mt-2" aria-label="Breadcrumb">
+            <nav className="flex items-center gap-1 text-xs text-ink-faint mt-2" aria-label="Breadcrumb">
               <Link to={`/projects/${projectId}/overview`} className="hover:text-primary">
                 Project
               </Link>

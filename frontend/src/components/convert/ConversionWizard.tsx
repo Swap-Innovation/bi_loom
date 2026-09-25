@@ -172,8 +172,8 @@ export function ConversionWizard({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
           <div className={cn(
-            'w-10 h-10 rounded-xl border flex items-center justify-center shrink-0',
-            stepComplete ? 'border-success/40 bg-green-50' : 'border-primary/30 bg-pink-50',
+            'w-10 h-10 rounded-lg border flex items-center justify-center shrink-0',
+            stepComplete ? 'border-success/40 bg-green-50' : 'border-primary/30 bg-blue-50',
           )}>
             <StepIcon
               size={20}

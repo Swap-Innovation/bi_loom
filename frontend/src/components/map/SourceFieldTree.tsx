@@ -58,7 +58,7 @@ export function SourceFieldTree({ documents, folders, selectedFieldName, onSelec
   const toggle = (key: string) => setExpanded((p) => ({ ...p, [key]: !p[key] }));
 
   return (
-    <div className="border border-border rounded-xl bg-white overflow-hidden h-full flex flex-col">
+    <div className="border border-border rounded-lg bg-white overflow-hidden h-full flex flex-col">
       <div className="px-3 py-2 bg-surface border-b border-border shrink-0">
         <p className="text-xs font-semibold">Source BO Fields</p>
         <p className="text-[10px] text-gray-400">Click a field to highlight its mapping</p>
@@ -98,7 +98,7 @@ export function SourceFieldTree({ documents, folders, selectedFieldName, onSelec
                         <button
                           type="button"
                           className={`w-full text-left px-2 py-1 rounded text-xs font-mono flex items-center gap-1.5 ${
-                            selected ? 'bg-pink-50 text-primary font-semibold' : 'hover:bg-surface text-gray-700'
+                            selected ? 'bg-blue-50 text-primary font-semibold' : 'hover:bg-surface text-gray-700'
                           }`}
                           onClick={() => onSelectField(field)}
                         >

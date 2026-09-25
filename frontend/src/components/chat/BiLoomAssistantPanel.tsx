@@ -228,7 +228,7 @@ export function BiLoomAssistantPanel({
         <button
           type="button"
           onClick={onToggleCollapse}
-          className="p-2 rounded-lg text-primary hover:bg-pink-50"
+          className="p-2 rounded-full text-primary hover:bg-primary-soft"
           title="Expand AI assistant"
         >
           <PanelRightOpen size={18} />
@@ -264,34 +264,36 @@ export function BiLoomAssistantPanel({
           className="absolute left-0 top-0 z-20 h-full w-1.5 -translate-x-1/2 cursor-col-resize hover:bg-primary/30 active:bg-primary/40"
         />
       )}
-      <div className="flex items-center gap-2 px-3 py-2.5 border-b border-border bg-ink text-white shrink-0">
-        <Sparkles size={16} className="shrink-0" />
+      <div className="flex items-center gap-2 px-3 py-2.5 border-b border-border bg-white shrink-0">
+        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-soft text-primary shrink-0">
+          <Sparkles size={16} />
+        </span>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <p className="text-sm font-semibold truncate">BI Loom Assistant</p>
+            <p className="text-sm font-medium text-ink truncate">BI Loom Assistant</p>
             <AiModeBadge status={aiStatus} compact />
           </div>
-          <p className="text-[10px] text-pink-100 truncate">
+          <p className="text-[11px] text-ink-muted truncate">
             {projectId ? `${pageLabel} · full history` : 'General · chat + activity'}
           </p>
         </div>
         <button
           type="button"
           onClick={() => clearHistory()}
-          className="p-1 hover:bg-white/20 rounded-lg shrink-0"
+          className="p-1.5 hover:bg-surface rounded-full shrink-0 text-ink-muted hover:text-ink"
           title="Clear chat history"
         >
-          <Trash2 size={14} />
+          <Trash2 size={16} />
         </button>
         {onToggleCollapse && (
-          <button type="button" onClick={onToggleCollapse} className="p-1 hover:bg-white/20 rounded-lg shrink-0">
+          <button type="button" onClick={onToggleCollapse} className="p-1.5 hover:bg-surface rounded-full shrink-0 text-ink-muted hover:text-ink">
             <PanelRightClose size={16} />
           </button>
         )}
       </div>
 
       {/* Unified chronological history */}
-      <div className="flex-1 min-h-0 overflow-y-auto p-3 bg-surface/40 space-y-2.5">
+      <div className="flex-1 min-h-0 overflow-y-auto p-3 bg-surface space-y-2.5">
         {entries.length === 0 && !chatMutation.isPending && (
           <div className="text-center py-10 px-3">
             <p className="text-sm text-gray-600 mb-1">Chat & activity history</p>
@@ -310,7 +312,7 @@ export function BiLoomAssistantPanel({
           if (entry.kind === 'user') {
             return (
               <div key={entry.id} className="flex flex-col items-end gap-0.5">
-                <div className="max-w-[92%] rounded-xl px-3 py-2 text-sm whitespace-pre-wrap bg-primary text-white">
+                <div className="max-w-[92%] rounded-lg rounded-br-sm px-3 py-2 text-sm whitespace-pre-wrap bg-primary-soft text-ink">
                   {entry.content}
                 </div>
                 <span className="text-[9px] text-gray-400 px-1">
@@ -329,7 +331,7 @@ export function BiLoomAssistantPanel({
                 : false;
               return (
                 <div key={entry.id} className="flex flex-col items-start gap-1.5">
-                  <div className="max-w-[95%] rounded-xl px-3 py-2 text-sm whitespace-pre-wrap bg-white border border-border text-gray-700">
+                  <div className="max-w-[95%] rounded-lg rounded-bl-sm px-3 py-2 text-sm whitespace-pre-wrap bg-white border border-border text-ink">
                     {entry.content}
                   </div>
                   {linked && !activityAlreadyListed && (linked.steps?.length ?? 0) > 0 && (
@@ -368,13 +370,13 @@ export function BiLoomAssistantPanel({
         {chatMutation.isPending && (
           <div className="space-y-2">
             {streamingThinking && (
-              <div className="mr-auto max-w-[95%] rounded-lg px-3 py-2 text-[11px] whitespace-pre-wrap bg-slate-50 border border-border text-ink-muted">
+              <div className="mr-auto max-w-[95%] rounded-lg px-3 py-2 text-[11px] whitespace-pre-wrap bg-surface border border-border text-ink-muted">
                 <span className="font-semibold uppercase tracking-wide text-[9px] block mb-1">Thinking</span>
                 {streamingThinking.slice(-500)}
               </div>
             )}
             {streamingReply ? (
-              <div className="mr-auto max-w-[95%] rounded-xl px-3 py-2 text-sm whitespace-pre-wrap bg-white border border-border text-gray-700">
+              <div className="mr-auto max-w-[95%] rounded-lg px-3 py-2 text-sm whitespace-pre-wrap bg-white border border-border text-ink">
                 {streamingReply}
                 <span className="inline-block w-1.5 h-3 ml-0.5 bg-primary animate-pulse align-middle" />
               </div>
@@ -400,7 +402,7 @@ export function BiLoomAssistantPanel({
             type="button"
             onClick={() => send(s)}
             disabled={chatMutation.isPending}
-            className="text-[10px] px-2 py-1 rounded-full border border-border text-gray-600 hover:border-primary hover:text-primary transition-colors truncate max-w-full"
+            className="text-[11px] px-3 py-1 rounded-full border border-border text-ink-muted hover:bg-primary-soft hover:border-primary/30 hover:text-primary transition-colors truncate max-w-full"
           >
             {s}
           </button>
@@ -412,7 +414,7 @@ export function BiLoomAssistantPanel({
         onSubmit={(e) => { e.preventDefault(); send(input); }}
       >
         <input
-          className="flex-1 border border-border rounded-lg px-2.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+          className="field-input flex-1"
           placeholder={`Ask about ${pageLabel}…`}
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -421,7 +423,7 @@ export function BiLoomAssistantPanel({
         <button
           type="submit"
           disabled={!input.trim() || chatMutation.isPending}
-          className="p-2 rounded-lg bg-primary text-white disabled:opacity-40 hover:bg-pink-700 transition-colors shrink-0"
+          className="h-9 w-9 rounded-full bg-primary text-white disabled:opacity-40 hover:bg-primary-hover transition-colors shrink-0 inline-flex items-center justify-center"
         >
           <Send size={15} />
         </button>

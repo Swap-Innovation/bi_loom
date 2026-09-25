@@ -131,13 +131,13 @@
     </visual>
     <visual type="bar" title="Revenue by Region" page="Summary">
       <position x="24" y="540" width="440" height="280" zIndex="2"/>
-      <formatting seriesColor="#E20074" axisColor="#111111" gridColor="#F5F5F5"/>
+      <formatting seriesColor="#1A73E8" axisColor="#111111" gridColor="#F5F5F5"/>
       <field name="REGION" dataType="string" role="axis"/>
       <field name="REVENUE" dataType="decimal" role="value"/>
     </visual>
     <visual type="kpi" title="Total Orders" page="Summary">
       <position x="500" y="540" width="200" height="120" zIndex="3"/>
-      <formatting fontSize="28" color="#E20074"/>
+      <formatting fontSize="28" color="#1A73E8"/>
       <field name="ORDER_COUNT" dataType="integer" role="value"/>
     </visual>
     <visual type="matrix" title="Orders Crosstab" page="Details">

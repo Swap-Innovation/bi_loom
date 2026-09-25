@@ -26,7 +26,7 @@ export function MspecDetailPanel({
 
   if (!sections) {
     return (
-      <div className="border border-border rounded-xl bg-white p-6 text-center">
+      <div className="border border-border rounded-lg bg-white p-6 text-center">
         <p className="text-gray-400 text-sm">Parse BO export first to generate MSpec</p>
       </div>
     );
@@ -35,14 +35,14 @@ export function MspecDetailPanel({
   const section = sections.find((s) => s.id === activeSection) || sections[0];
 
   return (
-    <div className="border border-border rounded-xl bg-white overflow-hidden flex flex-col h-full min-h-[480px]">
+    <div className="border border-border rounded-lg bg-white overflow-hidden flex flex-col h-full min-h-[480px]">
       <div className="px-4 py-3 bg-surface border-b border-border">
         <p className="text-sm font-semibold">MSpec Details</p>
         <p className="text-xs text-gray-400">Migration specification — every parsed BO artifact</p>
       </div>
 
       {selectedSource && (
-        <div className="px-4 py-2 bg-pink-50 border-b border-border">
+        <div className="px-4 py-2 bg-blue-50 border-b border-border">
           <p className="text-xs text-gray-500 uppercase">Selected source</p>
           <p className="text-sm font-mono font-medium">{JSON.stringify(selectedSource).slice(0, 120)}…</p>
         </div>
@@ -56,7 +56,7 @@ export function MspecDetailPanel({
               type="button"
               onClick={() => selectSection(s.id)}
               className={`w-full text-left px-3 py-2 text-xs border-b border-border hover:bg-surface ${
-                activeSection === s.id ? 'bg-pink-50 text-primary font-medium' : 'text-gray-600'
+                activeSection === s.id ? 'bg-blue-50 text-primary font-medium' : 'text-gray-600'
               }`}
             >
               {s.label}

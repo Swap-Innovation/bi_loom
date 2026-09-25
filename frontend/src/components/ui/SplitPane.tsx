@@ -12,7 +12,7 @@ interface SplitPaneProps {
 export function SplitPane({ left, center, right, className, defaultSizes = [25, 45, 30] }: SplitPaneProps) {
   if (!center) {
     return (
-      <Group orientation="horizontal" className={cn('min-h-[480px] rounded-xl border border-border overflow-hidden', className)}>
+      <Group orientation="horizontal" className={cn('min-h-[480px] rounded-lg border border-border overflow-hidden', className)}>
         <Panel defaultSize={40} minSize={20}>
           <div className="h-full overflow-y-auto bg-white p-3">{left}</div>
         </Panel>
@@ -25,7 +25,7 @@ export function SplitPane({ left, center, right, className, defaultSizes = [25, 
   }
 
   return (
-    <Group orientation="horizontal" className={cn('min-h-[520px] rounded-xl border border-border overflow-hidden', className)}>
+    <Group orientation="horizontal" className={cn('min-h-[520px] rounded-lg border border-border overflow-hidden', className)}>
       <Panel defaultSize={defaultSizes[0]} minSize={22}>
         <div className="h-full overflow-y-auto bg-white p-3 min-w-[200px]">{left}</div>
       </Panel>

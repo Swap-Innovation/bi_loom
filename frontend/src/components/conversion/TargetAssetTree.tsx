@@ -32,7 +32,7 @@ export function TargetAssetTree({ semanticModel, reports, summary, selectedId, o
         </div>
       )}
 
-      <div className="border border-border rounded-xl bg-white overflow-hidden">
+      <div className="border border-border rounded-lg bg-white overflow-hidden">
         <div className="px-4 py-3 bg-surface border-b border-border">
           <p className="text-sm font-semibold">Power BI Target Assets</p>
           <p className="text-xs text-gray-400">Semantic Model → Reports → Pages → Visuals</p>
@@ -71,7 +71,7 @@ export function TargetAssetTree({ semanticModel, reports, summary, selectedId, o
                           {table.columns.map((col) => (
                             <div
                               key={col.id}
-                              className={`flex items-center gap-2 px-3 py-1 text-xs cursor-pointer hover:bg-surface rounded ${selectedId === col.id ? 'bg-pink-50' : ''}`}
+                              className={`flex items-center gap-2 px-3 py-1 text-xs cursor-pointer hover:bg-surface rounded ${selectedId === col.id ? 'bg-blue-50' : ''}`}
                               style={{ paddingLeft: '40px' }}
                               onClick={() => onSelect?.(col.id, 'column', col)}
                             >
@@ -83,7 +83,7 @@ export function TargetAssetTree({ semanticModel, reports, summary, selectedId, o
                           {table.measures.map((m) => (
                             <div
                               key={m.id}
-                              className={`flex items-center gap-2 px-3 py-1 text-xs cursor-pointer hover:bg-surface rounded ${selectedId === m.id ? 'bg-pink-50' : ''}`}
+                              className={`flex items-center gap-2 px-3 py-1 text-xs cursor-pointer hover:bg-surface rounded ${selectedId === m.id ? 'bg-blue-50' : ''}`}
                               style={{ paddingLeft: '40px' }}
                               onClick={() => onSelect?.(m.id, 'measure', m)}
                             >
@@ -125,7 +125,7 @@ export function TargetAssetTree({ semanticModel, reports, summary, selectedId, o
                       {expanded[`page-${page.id}`] && page.visuals.map((visual) => (
                         <div
                           key={visual.id}
-                          className={`flex items-center gap-2 px-3 py-1 text-xs cursor-pointer hover:bg-surface rounded ${selectedId === visual.id ? 'bg-pink-50' : ''}`}
+                          className={`flex items-center gap-2 px-3 py-1 text-xs cursor-pointer hover:bg-surface rounded ${selectedId === visual.id ? 'bg-blue-50' : ''}`}
                           style={{ paddingLeft: '40px' }}
                           onClick={() => onSelect?.(visual.id, 'visual', visual)}
                         >
@@ -164,7 +164,7 @@ function TreeButton({
   return (
     <button
       type="button"
-      className={`w-full flex items-center gap-2 px-3 py-2 hover:bg-surface rounded-lg text-left ${selected ? 'bg-pink-50' : ''}`}
+      className={`w-full flex items-center gap-2 px-3 py-2 hover:bg-surface rounded-lg text-left ${selected ? 'bg-blue-50' : ''}`}
       style={{ paddingLeft: `${12 + depth * 8}px` }}
       onClick={() => { onClick(); onSelect?.(); }}
     >

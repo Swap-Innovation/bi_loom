@@ -37,14 +37,14 @@ export function SchemaGraph({ graph, loading }: SchemaGraphProps) {
 
   if (!graph?.nodes.length) {
     return (
-      <div className="h-64 flex items-center justify-center text-sm text-gray-400 border border-dashed border-border rounded-xl">
+      <div className="h-64 flex items-center justify-center text-sm text-gray-400 border border-dashed border-border rounded-lg">
         Select a target model to view relationships
       </div>
     );
   }
 
   return (
-    <div className="border border-border rounded-xl bg-white overflow-auto">
+    <div className="border border-border rounded-lg bg-white overflow-auto">
       <svg width={layout.width} height={layout.height} className="min-w-full">
         <defs>
           <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">

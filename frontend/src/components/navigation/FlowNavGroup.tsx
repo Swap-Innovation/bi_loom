@@ -35,7 +35,7 @@ interface FlowNavGroupProps {
 
 function StatusPip({ status, locked }: { status: StepStatus; locked?: boolean }) {
   if (locked || status === 'blocked') {
-    return <Lock size={12} className="text-gray-300 shrink-0" aria-hidden />;
+    return <Lock size={12} className="text-ink-faint shrink-0" aria-hidden />;
   }
   if (status === 'complete') {
     return (
@@ -50,7 +50,7 @@ function StatusPip({ status, locked }: { status: StepStatus; locked?: boolean })
   if (status === 'failed') {
     return <Circle size={10} className="text-error fill-error/20 shrink-0" aria-hidden />;
   }
-  return <Circle size={10} className="text-gray-300 shrink-0" aria-hidden />;
+  return <Circle size={10} className="text-ink-faint shrink-0" aria-hidden />;
 }
 
 export function FlowNavGroup({
@@ -66,7 +66,7 @@ export function FlowNavGroup({
   onToggle,
   progress,
 }: FlowNavGroupProps) {
-  const rowBase = 'group flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors';
+  const rowBase = 'group flex w-full items-center gap-2.5 rounded-r-full px-3 py-2 text-[13px] transition-colors';
 
   return (
     <div className="space-y-0.5">
@@ -74,7 +74,7 @@ export function FlowNavGroup({
         <button
           type="button"
           onClick={onToggle}
-          className="flex w-6 shrink-0 items-center justify-center rounded-md text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+          className="flex w-6 shrink-0 items-center justify-center rounded-full text-ink-faint hover:bg-[#E8EAED] hover:text-ink"
           aria-expanded={expanded}
           aria-label={expanded ? `Collapse ${label}` : `Expand ${label}`}
         >
@@ -86,7 +86,7 @@ export function FlowNavGroup({
 
         {parentBlocked ? (
           <div
-            className={cn(rowBase, 'flex-1 cursor-not-allowed text-gray-400')}
+            className={cn(rowBase, 'flex-1 cursor-not-allowed text-ink-faint')}
             title={parentBlockers?.join('; ')}
           >
             <ParentIcon size={16} className="shrink-0 opacity-40" strokeWidth={1.75} />
@@ -100,18 +100,18 @@ export function FlowNavGroup({
               rowBase,
               'flex-1 min-w-0',
               parentActive
-                ? 'bg-primary-soft font-semibold text-ink'
-                : 'font-medium text-ink-muted hover:bg-slate-50 hover:text-ink',
+                ? 'bg-primary-soft font-medium text-primary'
+                : 'font-medium text-ink-muted hover:bg-[#E8EAED] hover:text-ink',
             )}
           >
             <ParentIcon
               size={16}
-              className={cn('shrink-0', parentActive ? 'text-primary' : 'text-gray-500')}
+              className={cn('shrink-0', parentActive ? 'text-primary' : 'text-ink-muted')}
               strokeWidth={1.75}
             />
             <span className="flex-1 truncate">{label}</span>
             {progress && (
-              <span className="text-[11px] tabular-nums text-gray-400 font-normal">{progress}</span>
+              <span className="text-[11px] tabular-nums text-ink-faint font-normal">{progress}</span>
             )}
             <StatusPip status={parentStatus} />
           </NavLink>
@@ -127,7 +127,7 @@ export function FlowNavGroup({
               return (
                 <li key={step.id}>
                   <div
-                    className={cn(rowBase, 'cursor-not-allowed text-gray-400')}
+                    className={cn(rowBase, 'cursor-not-allowed text-ink-faint')}
                     title={step.blocker ?? 'Complete the previous step first'}
                   >
                     {Icon && <Icon size={14} className="shrink-0 opacity-40" strokeWidth={1.75} />}
@@ -146,14 +146,14 @@ export function FlowNavGroup({
                   className={cn(
                     rowBase,
                     step.active
-                      ? 'bg-primary-soft font-medium text-ink'
-                      : 'text-ink-muted hover:bg-slate-50 hover:text-ink',
+                      ? 'bg-primary-soft font-medium text-primary'
+                      : 'text-ink-muted hover:bg-[#E8EAED] hover:text-ink',
                   )}
                 >
                   {Icon && (
                     <Icon
                       size={14}
-                      className={cn('shrink-0', step.active ? 'text-primary' : 'text-gray-400')}
+                      className={cn('shrink-0', step.active ? 'text-primary' : 'text-ink-faint')}
                       strokeWidth={1.75}
                     />
                   )}
@@ -183,12 +183,12 @@ interface SimplePhaseLinkProps {
 export function SimplePhaseLink({
   label, to, icon: Icon, status, blocked, blockers, end,
 }: SimplePhaseLinkProps) {
-  const rowBase = 'flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] transition-colors';
+  const rowBase = 'flex w-full items-center gap-2.5 rounded-r-full px-3 py-2 text-[13px] transition-colors';
 
   if (blocked) {
     return (
       <div
-        className={cn(rowBase, 'cursor-not-allowed text-gray-400')}
+        className={cn(rowBase, 'cursor-not-allowed text-ink-faint')}
         title={blockers?.join('; ')}
       >
         <Icon size={16} className="shrink-0 opacity-40" strokeWidth={1.75} />
@@ -205,15 +205,15 @@ export function SimplePhaseLink({
       className={({ isActive }) => cn(
         rowBase,
         isActive
-          ? 'bg-primary-soft font-semibold text-ink'
-          : 'font-medium text-ink-muted hover:bg-slate-50 hover:text-ink',
+          ? 'bg-primary-soft font-medium text-primary'
+          : 'font-medium text-ink-muted hover:bg-[#E8EAED] hover:text-ink',
       )}
     >
       {({ isActive }) => (
         <>
           <Icon
             size={16}
-            className={cn('shrink-0', isActive ? 'text-primary' : 'text-gray-500')}
+            className={cn('shrink-0', isActive ? 'text-primary' : 'text-ink-muted')}
             strokeWidth={1.75}
           />
           <span className="flex-1 truncate">{label}</span>

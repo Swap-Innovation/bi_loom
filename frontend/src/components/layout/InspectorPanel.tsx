@@ -14,7 +14,7 @@ export function InspectorPanel({ title = 'Inspector', children }: InspectorPanel
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed right-4 bottom-4 p-3 bg-primary text-white rounded-full shadow-lg hover:opacity-90 z-10"
+        className="fixed right-4 bottom-4 p-3.5 bg-primary text-white rounded-full g-elev-2 hover:bg-primary-hover z-10"
         title="Open inspector"
       >
         <PanelRightOpen size={20} />
@@ -26,7 +26,7 @@ export function InspectorPanel({ title = 'Inspector', children }: InspectorPanel
     <aside className="w-72 shrink-0 border-l border-border bg-white min-h-[calc(100vh-8rem)] flex flex-col">
       <div className="flex items-center justify-between px-4 py-3 border-b border-border">
         <p className="text-sm font-semibold">{title}</p>
-        <button type="button" onClick={() => setOpen(false)} className="text-gray-400 hover:text-gray-600">
+        <button type="button" onClick={() => setOpen(false)} className="p-1.5 rounded-full text-ink-faint hover:bg-surface hover:text-ink">
           <PanelRightClose size={18} />
         </button>
       </div>

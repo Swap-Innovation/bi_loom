@@ -158,7 +158,7 @@ export function ValidatePage() {
       </div>
 
       {validating && (
-        <Card className="mb-6 border-primary/30 bg-pink-50/40">
+        <Card className="mb-6 border-primary/30 bg-blue-50/40">
           <div className="flex items-center gap-3">
             <Loader2 className="animate-spin text-primary shrink-0" size={20} />
             <div className="min-w-0 flex-1">

@@ -51,7 +51,7 @@ export function ProjectShell() {
       <ProjectHeader breadcrumb={breadcrumb} />
       <div className="flex flex-1 w-full min-h-0">
         <PhaseSidebar />
-        <main className="flex-1 min-w-0 p-5 sm:p-6 bg-transparent overflow-y-auto">
+        <main className="flex-1 min-w-0 p-5 sm:p-6 bg-surface overflow-y-auto">
           <Outlet />
         </main>
       </div>

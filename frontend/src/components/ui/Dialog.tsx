@@ -29,17 +29,24 @@ export function Dialog({ open, onClose, title, children, footer, size = 'md' }: 
   return (
     <dialog
       ref={ref}
-      className={cn('fixed inset-0 z-50 m-auto w-full rounded-xl border border-border bg-white p-0 shadow-xl backdrop:bg-black/40', sizes[size])}
+      className={cn(
+        'fixed inset-0 z-50 m-auto w-full rounded-lg border-0 bg-white p-0 g-elev-2 backdrop:bg-black/32',
+        sizes[size],
+      )}
       onClose={onClose}
     >
-      <div className="flex items-center justify-between px-5 py-4 border-b border-border">
-        <h2 className="font-semibold">{title}</h2>
-        <button type="button" onClick={onClose} className="text-gray-400 hover:text-gray-600">
+      <div className="flex items-center justify-between px-6 pt-5 pb-2">
+        <h2 className="text-[22px] font-normal text-ink leading-7">{title}</h2>
+        <button
+          type="button"
+          onClick={onClose}
+          className="p-2 -mr-2 rounded-full text-ink-faint hover:bg-surface hover:text-ink"
+        >
           <X size={18} />
         </button>
       </div>
-      <div className="px-5 py-4">{children}</div>
-      {footer && <div className="px-5 py-4 border-t border-border flex justify-end gap-2">{footer}</div>}
+      <div className="px-6 py-3">{children}</div>
+      {footer && <div className="px-6 py-4 flex justify-end gap-2">{footer}</div>}
     </dialog>
   );
 }
@@ -65,14 +72,14 @@ export function ConfirmDialog({
       title={title}
       footer={
         <>
-          <Button variant="outline" size="sm" type="button" onClick={onClose} disabled={loading}>Cancel</Button>
+          <Button variant="ghost" size="sm" type="button" onClick={onClose} disabled={loading}>Cancel</Button>
           <Button size="sm" type="button" variant={variant === 'danger' ? 'danger' : 'primary'} onClick={onConfirm} disabled={loading}>
             {loading ? 'Please wait...' : confirmLabel}
           </Button>
         </>
       }
     >
-      <p className="text-sm text-gray-600">{message}</p>
+      <p className="text-sm text-ink-muted leading-5">{message}</p>
     </Dialog>
   );
 }

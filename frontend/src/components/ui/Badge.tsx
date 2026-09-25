@@ -1,17 +1,17 @@
 import { cn } from '../../utils/cn';
 
 const variants = {
-  default: 'bg-surface text-ink border border-border',
-  primary: 'bg-primary-soft text-primary border border-primary/20',
-  success: 'bg-emerald-50 text-success border border-emerald-200/80',
-  warning: 'bg-amber-50 text-warning border border-amber-200/80',
-  error: 'bg-red-50 text-error border border-red-200/80',
+  default: 'bg-surface text-ink-muted border border-border',
+  primary: 'bg-primary-soft text-primary border border-transparent',
+  success: 'bg-[#E6F4EA] text-success border border-transparent',
+  warning: 'bg-[#FEF7E0] text-warning border border-transparent',
+  error: 'bg-[#FCE8E6] text-error border border-transparent',
   outline: 'border border-border text-ink-muted bg-white',
 };
 
 const sizes = {
-  sm: 'px-2 py-0.5 text-[10px]',
-  md: 'px-2.5 py-1 text-[11px]',
+  sm: 'px-2 py-0.5 text-[11px]',
+  md: 'px-2.5 py-1 text-[12px]',
 };
 
 interface BadgeProps {
@@ -25,7 +25,7 @@ export function Badge({ variant = 'default', size = 'md', children, className }:
   return (
     <span
       className={cn(
-        'inline-flex items-center rounded-md font-semibold tracking-wide uppercase',
+        'inline-flex items-center rounded-full font-medium',
         variants[variant],
         sizes[size],
         className,
